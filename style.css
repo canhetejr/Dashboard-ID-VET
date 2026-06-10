@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --color-bg:        #0B0F19;
-  --color-surface:   #111827;
-  --color-card:      #1F2937;
-  --color-border:    #374151;
-  --color-text:      #F9FAFB;
-  --color-muted:     #9CA3AF;
-  --color-hint:      #6B7280;
+  --color-bg:        #000000;
+  --color-surface:   #09090B;
+  --color-card:      #18181B;
+  --color-border:    #27272A;
+  --color-text:      #FAFAFA;
+  --color-muted:     #A1A1AA;
+  --color-hint:      #71717A;
   
-  --color-green:     #10B981;
+  --color-green:     #22C55E;
   --color-amber:     #F59E0B;
   --color-red:       #EF4444;
   --color-blue:      #3B82F6;
-  --color-purple:    #8B5CF6;
+  --color-purple:    #A855F7;
   --color-cyan:      #06B6D4;
   
-  --color-ead:       #3B82F6;
-  --color-semi:      #8B5CF6;
-  --color-tecs:      #F59E0B;
+  --color-ead:       #FAFAFA;
+  --color-semi:      #A1A1AA;
+  --color-tecs:      #3B82F6;
   
   --radius-sm:       8px;
   --radius-md:       12px;
@@ -67,15 +67,15 @@ body {
 .brand-icon {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--color-green), var(--color-cyan));
+  background: linear-gradient(135deg, var(--color-text), var(--color-muted));
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--color-bg);
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
 .brand-title {
@@ -129,9 +129,9 @@ body {
 }
 
 .nav-item.active {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--color-green);
-  box-shadow: inset 3px 0 0 var(--color-green);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
+  box-shadow: inset 3px 0 0 var(--color-text);
 }
 
 /* Main Content */
@@ -179,9 +179,9 @@ body {
   display: block;
   width: 8px;
   height: 8px;
-  background-color: var(--color-green);
+  background-color: var(--color-blue);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--color-green);
+  box-shadow: 0 0 8px var(--color-blue);
 }
 
 .content {
@@ -438,7 +438,7 @@ tr:last-child td {
   background-color: var(--color-border);
 }
 .sub-nav-item.active {
-  background-color: var(--color-blue);
-  color: #fff;
+  background-color: var(--color-text);
+  color: var(--color-bg);
 }
 

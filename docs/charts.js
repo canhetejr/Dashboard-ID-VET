@@ -33,7 +33,8 @@ export function renderCharts() {
     tecs: getCssColor('--color-tecs'),
     text: getCssColor('--color-text'),
     border: getCssColor('--color-border'),
-    muted: getCssColor('--color-muted')
+    muted: getCssColor('--color-muted'),
+    surface: getCssColor('--color-surface')
   };
 
   const commonOptions = {
@@ -42,10 +43,10 @@ export function renderCharts() {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: 'rgba(17, 24, 39, 0.95)',
-        titleColor: '#F9FAFB',
-        bodyColor: '#D1D5DB',
-        borderColor: '#374151',
+        backgroundColor: colors.surface,
+        titleColor: colors.text,
+        bodyColor: colors.muted,
+        borderColor: colors.border,
         borderWidth: 1,
         padding: 12,
         cornerRadius: 8,
