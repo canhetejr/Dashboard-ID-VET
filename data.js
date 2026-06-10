@@ -1,40 +1,59 @@
-// Dados mockados para a Visão Geral Institucional
-
-const KPI_DATA = {
-  respostas: '36.151',
-  disciplinas: '1.289',
-  centros: '7',
-  media: '4.68',
-  favoravel: '93.9%',
-  neutro: '4.2%',
-  desfavoravel: '1.9%'
-};
-
-// 1. Distribuição de Respostas (Discordo Totalmente, Parcialmente, Indiferente, Concordo Parcialmente, Concordo Totalmente)
-const DISTRIBUICAO = [
-  { label: 'Respostas', data: [1.9, 2.0, 4.2, 10.5, 81.4] } 
+const CENTERS = [
+  {
+    key: 'CCS',
+    label: 'Ciências da Saúde',
+    total: 297,
+    conteudo: { ok: 295, pendente: 2 },
+    mediacao: { ok: 280, pendente: 0, verificar: 15, andamento: 0, aguardando: 1, estagio: 0, naoOfertado: 1 }
+  },
+  {
+    key: 'CCSA',
+    label: 'Ciências Sociais Aplicadas',
+    total: 222,
+    conteudo: { ok: 216, pendente: 6 },
+    mediacao: { ok: 133, pendente: 81, verificar: 6, andamento: 1, aguardando: 0, estagio: 1, naoOfertado: 0 }
+  },
+  {
+    key: 'CEHLA',
+    label: 'Ciências Exatas, Humanas, Letras e Artes',
+    total: 661,
+    conteudo: { ok: 646, pendente: 15 },
+    mediacao: { ok: 307, pendente: 331, verificar: 19, andamento: 4, aguardando: 0, estagio: 0, naoOfertado: 0 }
+  },
+  {
+    key: 'CES',
+    label: 'Engenharias e Sustentabilidade',
+    total: 186,
+    conteudo: { ok: 186, pendente: 0 },
+    mediacao: { ok: 90, pendente: 62, verificar: 2, andamento: 29, aguardando: 3, estagio: 0, naoOfertado: 0 }
+  },
+  {
+    key: 'CGJS',
+    label: 'Gestão, Jurídico e Segurança',
+    total: 178,
+    conteudo: { ok: 169, pendente: 9 },
+    mediacao: { ok: 99, pendente: 59, verificar: 7, andamento: 11, aguardando: 2, estagio: 0, naoOfertado: 0 }
+  },
+  {
+    key: 'CTIC',
+    label: 'Tecnologia da Informação e Comunicação',
+    total: 278,
+    conteudo: { ok: 276, pendente: 2 },
+    mediacao: { ok: 162, pendente: 115, verificar: 0, andamento: 1, aguardando: 0, estagio: 0, naoOfertado: 0 }
+  }
 ];
 
-// 2. Média por Pergunta (Q1 a Q6)
-const PERGUNTAS = {
-  labels: ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
-  data: [4.8, 4.75, 4.78, 4.75, 4.6, 4.65]
-};
+const ENSALAMENTO = [
+  { key: 'CCAS', label: 'Cidadania e Ação Social', ead: 155, semi: 69, tecs: 85 },
+  { key: 'CCS', label: 'Ciências da Saúde', ead: 229, semi: 55, tecs: 547 },
+  { key: 'CCSA', label: 'Ciências Sociais Aplicadas', ead: 602, semi: 0, tecs: 907 },
+  { key: 'CEHLA', label: 'Ciências Exatas, Humanas, Letras e Artes', ead: 1344, semi: 599, tecs: 152 },
+  { key: 'CES', label: 'Engenharias e Sustentabilidade', ead: 225, semi: 0, tecs: 395 },
+  { key: 'CGJS', label: 'Gestão, Jurídico e Segurança', ead: 102, semi: 0, tecs: 725 },
+  { key: 'CTIC', label: 'Tecnologia da Informação e Comunicação', ead: 439, semi: 6, tecs: 806 }
+];
 
-// 3. Média Likert por Centro
-const MEDIA_CENTRO = {
-  labels: ['CCAS', 'CCS', 'CCSA', 'CEHLA', 'CES', 'CGJS', 'CTIC'],
-  data: [4.7, 4.8, 4.65, 4.75, 4.85, 4.5, 4.6]
-};
+const PERIODO = '2025.1';
 
-// 4. Favorabilidade por Centro (%)
-const FAVORAVEL_CENTRO = {
-  labels: ['CCAS', 'CCS', 'CCSA', 'CEHLA', 'CES', 'CGJS', 'CTIC'],
-  data: [94.5, 96.0, 91.5, 95.0, 97.5, 89.0, 92.5]
-};
-
-window.KPI_DATA = KPI_DATA;
-window.DISTRIBUICAO = DISTRIBUICAO;
-window.PERGUNTAS = PERGUNTAS;
-window.MEDIA_CENTRO = MEDIA_CENTRO;
-window.FAVORAVEL_CENTRO = FAVORAVEL_CENTRO;
+window.CENTERS = CENTERS;
+window.ENSALAMENTO = ENSALAMENTO;
