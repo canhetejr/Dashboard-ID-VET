@@ -2,120 +2,158 @@ function getColor(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-function initCharts() {
-  Chart.defaults.font.family = "'Inter', sans-serif";
-  Chart.defaults.color = getColor('--color-muted');
-
-  const defaultOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false }
+const defaultOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false }
+  },
+  scales: {
+    x: {
+      stacked: true,
+      grid: { display: false },
+      border: { display: false },
+      ticks: { color: '#64748b', font: { size: 11 } }
     },
-    scales: {
-      x: {
-        grid: { display: false },
-        border: { display: false }
-      },
-      y: {
-        grid: { color: getColor('--color-border') },
-        border: { display: false }
-      }
+    y: {
+      stacked: true,
+      grid: { color: 'rgba(255,255,255,0.06)' },
+      border: { display: false },
+      ticks: { color: '#64748b', font: { size: 10 } }
     }
-  };
+  }
+};
 
-  // 1. Distribuição de Respostas (Horizontal Bar Stacked)
-  const ctxDist = document.getElementById('chartDistribuicao');
-  if (ctxDist && window.DISTRIBUICAO) {
-    new Chart(ctxDist, {
+function initCharts() {
+  const centers = window.CENTERS || [];
+  const ensalamento = window.ENSALAMENTO || [];
+  
+  const centerLabels = centers.map(c => c.key);
+  
+  // 1. Gráfico Mediação
+  const ctxMediacao = document.getElementById('chartMediacao');
+  if (ctxMediacao) {
+    new Chart(ctxMediacao, {
       type: 'bar',
       data: {
-        labels: [window.DISTRIBUICAO[0].label],
+        labels: centerLabels,
         datasets: [
-          { label: 'Discordo Totalmente', data: [window.DISTRIBUICAO[0].data[0]], backgroundColor: getColor('--likert-1') },
-          { label: 'Discordo Parcialmente', data: [window.DISTRIBUICAO[0].data[1]], backgroundColor: getColor('--likert-2') },
-          { label: 'Indiferente', data: [window.DISTRIBUICAO[0].data[2]], backgroundColor: getColor('--likert-3') },
-          { label: 'Concordo Parcialmente', data: [window.DISTRIBUICAO[0].data[3]], backgroundColor: getColor('--likert-4') },
-          { label: 'Concordo Totalmente', data: [window.DISTRIBUICAO[0].data[4]], backgroundColor: getColor('--likert-5') }
+          {
+            label: 'Concluído',
+            data: centers.map(c => c.mediacao.ok),
+            backgroundColor: getColor('--color-green'),
+            barThickness: 32
+          },
+          {
+            label: 'Pendente',
+            data: centers.map(c => c.mediacao.pendente),
+            backgroundColor: '#94a3b8', // hardcode conforme AGENTS.md
+            barThickness: 32
+          },
+          {
+            label: 'Verificar',
+            data: centers.map(c => c.mediacao.verificar),
+            backgroundColor: getColor('--color-amber'),
+            barThickness: 32
+          },
+          {
+            label: 'Andamento',
+            data: centers.map(c => c.mediacao.andamento),
+            backgroundColor: getColor('--color-blue'),
+            barThickness: 32
+          },
+          {
+            label: 'Aguardando',
+            data: centers.map(c => c.mediacao.aguardando),
+            backgroundColor: getColor('--color-purple'),
+            barThickness: 32
+          },
+          {
+            label: 'Estágio',
+            data: centers.map(c => c.mediacao.estagio),
+            backgroundColor: getColor('--color-cyan'),
+            barThickness: 32
+          }
         ]
       },
-      options: {
-        ...defaultOptions,
-        indexAxis: 'y',
-        scales: {
-          x: { stacked: true, display: false },
-          y: { stacked: true, display: true, grid: { display: false } }
+      options: defaultOptions
+    });
+  }
+
+  // 2. Gráfico Conteúdo
+  const ctxConteudo = document.getElementById('chartConteudo');
+  if (ctxConteudo) {
+    new Chart(ctxConteudo, {
+      type: 'bar',
+      data: {
+        labels: centerLabels,
+        datasets: [
+          {
+            label: 'Concluído',
+            data: centers.map(c => c.conteudo.ok),
+            backgroundColor: getColor('--color-green'),
+            barThickness: 32
+          },
+          {
+            label: 'Pendente',
+            data: centers.map(c => c.conteudo.pendente),
+            backgroundColor: getColor('--color-amber'), // Conforme SPEC.md 5.2
+            barThickness: 32
+          }
+        ]
+      },
+      options: defaultOptions
+    });
+  }
+
+  // 3. Gráfico Ensalamento
+  const ctxEnsalamento = document.getElementById('chartEnsalamento');
+  if (ctxEnsalamento) {
+    const ensalamentoLabels = ensalamento.map(e => e.key);
+    
+    // Config específica para tooltip toLocaleString('pt-BR')
+    const ensOptions = JSON.parse(JSON.stringify(defaultOptions));
+    ensOptions.plugins.tooltip = {
+      callbacks: {
+        label: function(context) {
+          let label = context.dataset.label || '';
+          if (label) {
+            label += ': ';
+          }
+          if (context.parsed.y !== null) {
+            label += context.parsed.y.toLocaleString('pt-BR');
+          }
+          return label;
         }
       }
-    });
-  }
-
-  // 2. Média por Pergunta
-  const ctxPerguntas = document.getElementById('chartPerguntas');
-  if (ctxPerguntas && window.PERGUNTAS) {
-    const opt = JSON.parse(JSON.stringify(defaultOptions));
-    opt.scales.y.min = 1;
-    opt.scales.y.max = 5;
-    
-    new Chart(ctxPerguntas, {
-      type: 'bar',
-      data: {
-        labels: window.PERGUNTAS.labels,
-        datasets: [{
-          data: window.PERGUNTAS.data,
-          backgroundColor: getColor('--color-primary'),
-          barThickness: 40,
-          borderRadius: 4
-        }]
-      },
-      options: opt
-    });
-  }
-
-  // 3. Média Likert por Centro
-  const ctxMediaCentro = document.getElementById('chartMediaCentro');
-  if (ctxMediaCentro && window.MEDIA_CENTRO) {
-    const opt = JSON.parse(JSON.stringify(defaultOptions));
-    opt.scales.y.min = 2;
-    opt.scales.y.max = 5;
-
-    new Chart(ctxMediaCentro, {
-      type: 'bar',
-      data: {
-        labels: window.MEDIA_CENTRO.labels,
-        datasets: [{
-          data: window.MEDIA_CENTRO.data,
-          backgroundColor: getColor('--color-primary'),
-          barThickness: 32,
-          borderRadius: 4
-        }]
-      },
-      options: opt
-    });
-  }
-
-  // 4. Favorabilidade por Centro
-  const ctxFavoravel = document.getElementById('chartFavorabilidade');
-  if (ctxFavoravel && window.FAVORAVEL_CENTRO) {
-    const opt = JSON.parse(JSON.stringify(defaultOptions));
-    opt.scales.y.min = 50;
-    opt.scales.y.max = 100;
-    opt.scales.y.ticks = {
-      callback: function(value) { return value + '%'; }
     };
 
-    new Chart(ctxFavoravel, {
+    new Chart(ctxEnsalamento, {
       type: 'bar',
       data: {
-        labels: window.FAVORAVEL_CENTRO.labels,
-        datasets: [{
-          data: window.FAVORAVEL_CENTRO.data,
-          backgroundColor: getColor('--color-primary'),
-          barThickness: 32,
-          borderRadius: 4
-        }]
+        labels: ensalamentoLabels,
+        datasets: [
+          {
+            label: 'EAD',
+            data: ensalamento.map(e => e.ead),
+            backgroundColor: getColor('--color-ead'),
+            barThickness: 32
+          },
+          {
+            label: 'Semipresencial',
+            data: ensalamento.map(e => e.semi),
+            backgroundColor: getColor('--color-semi'),
+            barThickness: 32
+          },
+          {
+            label: 'Tecnólogos',
+            data: ensalamento.map(e => e.tecs),
+            backgroundColor: getColor('--color-tecs'),
+            barThickness: 32
+          }
+        ]
       },
-      options: opt
+      options: ensOptions
     });
   }
 }

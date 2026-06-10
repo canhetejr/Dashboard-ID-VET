@@ -1,40 +1,186 @@
-// Dados mockados para a Visão Geral Institucional
-
-const KPI_DATA = {
-  respostas: '36.151',
-  disciplinas: '1.289',
-  centros: '7',
-  media: '4.68',
-  favoravel: '93.9%',
-  neutro: '4.2%',
-  desfavoravel: '1.9%'
-};
-
-// 1. Distribuição de Respostas (Discordo Totalmente, Parcialmente, Indiferente, Concordo Parcialmente, Concordo Totalmente)
-const DISTRIBUICAO = [
-  { label: 'Respostas', data: [1.9, 2.0, 4.2, 10.5, 81.4] } 
+export const CENTERS = [
+  {
+    "key": "CCAS",
+    "label": "Cidadania e Ação Social",
+    "total": 142,
+    "conteudo": {
+      "ok": 142,
+      "pendente": 0
+    },
+    "mediacao": {
+      "ok": 142,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CCS",
+    "label": "Ciências da Saúde",
+    "total": 297,
+    "conteudo": {
+      "ok": 295,
+      "pendente": 2
+    },
+    "mediacao": {
+      "ok": 297,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CCSA",
+    "label": "Ciências Sociais Aplicadas",
+    "total": 222,
+    "conteudo": {
+      "ok": 216,
+      "pendente": 6
+    },
+    "mediacao": {
+      "ok": 222,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CEHLA",
+    "label": "Engenharias, Humanidades e Letras",
+    "total": 661,
+    "conteudo": {
+      "ok": 646,
+      "pendente": 15
+    },
+    "mediacao": {
+      "ok": 661,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CES",
+    "label": "Centro de Excelência em Saúde",
+    "total": 186,
+    "conteudo": {
+      "ok": 186,
+      "pendente": 0
+    },
+    "mediacao": {
+      "ok": 183,
+      "pendente": 3,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CGJS",
+    "label": "Gestão e Jurídico",
+    "total": 178,
+    "conteudo": {
+      "ok": 169,
+      "pendente": 9
+    },
+    "mediacao": {
+      "ok": 178,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  },
+  {
+    "key": "CTIC",
+    "label": "Tecnologia da Informação",
+    "total": 278,
+    "conteudo": {
+      "ok": 276,
+      "pendente": 2
+    },
+    "mediacao": {
+      "ok": 278,
+      "pendente": 0,
+      "verificar": 0,
+      "andamento": 0,
+      "aguardando": 0,
+      "estagio": 0,
+      "naoOfertado": 0
+    }
+  }
 ];
 
-// 2. Média por Pergunta (Q1 a Q6)
-const PERGUNTAS = {
-  labels: ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
-  data: [4.8, 4.75, 4.78, 4.75, 4.6, 4.65]
-};
+export const ENSALAMENTO = [
+  {
+    "key": "CCAS",
+    "label": "Cidadania e Ação Social",
+    "ead": 129,
+    "semi": 102,
+    "tecs": 88
+  },
+  {
+    "key": "CCS",
+    "label": "Ciências da Saúde",
+    "ead": 195,
+    "semi": 158,
+    "tecs": 441
+  },
+  {
+    "key": "CCSA",
+    "label": "Ciências Sociais Aplicadas",
+    "ead": 580,
+    "semi": 0,
+    "tecs": 981
+  },
+  {
+    "key": "CEHLA",
+    "label": "Engenharias, Humanidades e Letras",
+    "ead": 1093,
+    "semi": 980,
+    "tecs": 147
+  },
+  {
+    "key": "CES",
+    "label": "Centro de Excelência em Saúde",
+    "ead": 206,
+    "semi": 0,
+    "tecs": 379
+  },
+  {
+    "key": "CGJS",
+    "label": "Gestão e Jurídico",
+    "ead": 94,
+    "semi": 0,
+    "tecs": 752
+  },
+  {
+    "key": "CTIC",
+    "label": "Tecnologia da Informação",
+    "ead": 469,
+    "semi": 27,
+    "tecs": 817
+  }
+];
 
-// 3. Média Likert por Centro
-const MEDIA_CENTRO = {
-  labels: ['CCAS', 'CCS', 'CCSA', 'CEHLA', 'CES', 'CGJS', 'CTIC'],
-  data: [4.7, 4.8, 4.65, 4.75, 4.85, 4.5, 4.6]
-};
+export const PERIODO = '2025.1';
 
-// 4. Favorabilidade por Centro (%)
-const FAVORAVEL_CENTRO = {
-  labels: ['CCAS', 'CCS', 'CCSA', 'CEHLA', 'CES', 'CGJS', 'CTIC'],
-  data: [94.5, 96.0, 91.5, 95.0, 97.5, 89.0, 92.5]
-};
-
-window.KPI_DATA = KPI_DATA;
-window.DISTRIBUICAO = DISTRIBUICAO;
-window.PERGUNTAS = PERGUNTAS;
-window.MEDIA_CENTRO = MEDIA_CENTRO;
-window.FAVORAVEL_CENTRO = FAVORAVEL_CENTRO;
+window.CENTERS = CENTERS;
+window.ENSALAMENTO = ENSALAMENTO;
+window.PERIODO = PERIODO;

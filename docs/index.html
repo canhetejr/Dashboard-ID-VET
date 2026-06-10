@@ -5,184 +5,141 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Qualidade EAD</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <i class="ph-fill ph-student"></i> Unicv
+  <div class="header">
+    <div class="header-left">
+      <h1>Qualidade EAD · UniCV</h1>
+      <p>Acompanhamento de disciplinas — Período 2025.1</p>
     </div>
-
-    <div class="sidebar-section">Principal</div>
-    <ul class="nav-menu">
-      <li><a href="#" class="nav-item active"><i class="ph ph-squares-four"></i> Visão Geral</a></li>
-      <li><a href="#" class="nav-item"><i class="ph ph-chat-centered-text"></i> Análise de Comentários</a></li>
-    </ul>
-
-    <div class="sidebar-section">Conta</div>
-    <ul class="nav-menu">
-      <li><a href="#" class="nav-item"><i class="ph ph-user-circle"></i> Meu Perfil</a></li>
-    </ul>
-
-    <div class="sidebar-section">Administração</div>
-    <ul class="nav-menu">
-      <li><a href="#" class="nav-item"><i class="ph ph-users"></i> Gestão de Usuários</a></li>
-      <li><a href="#" class="nav-item"><i class="ph ph-article"></i> Formulários</a></li>
-      <li><a href="#" class="nav-item"><i class="ph ph-swap"></i> Conversores</a></li>
-      <li><a href="#" class="nav-item"><i class="ph ph-book-open"></i> Documentação</a></li>
-    </ul>
-
-    <div class="user-profile">
-      <div class="user-avatar">L</div>
-      <div class="user-info">
-        <div class="user-name">Luiz Fernando C...</div>
-        <div class="user-role">Administrador</div>
-      </div>
-      <i class="ph ph-sign-out" style="color: var(--color-muted); cursor: pointer;"></i>
+    <div class="header-right">
+      2.121 IDs · 7 centros
     </div>
-  </aside>
+  </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-wrapper">
-    
-    <div class="top-bar">
-      <div class="header-titles">
-        <div class="tag-view"><i class="ph ph-trend-up"></i> Visão Institucional</div>
-        <h1 class="header-title">Qualidade EAD</h1>
-        <p class="header-subtitle">Indicadores de satisfação e experiência — Pesquisa da Disciplina.</p>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total de IDs</div>
+      <div class="kpi-value" style="color: var(--color-text);">2.121</div>
+      <div class="kpi-subtext">7 centros acadêmicos</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Conteúdo concluído</div>
+      <div class="kpi-value" style="color: var(--color-green);">98,1%</div>
+      <div class="kpi-subtext">1.788 de 1.822</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mediação concluída</div>
+      <div class="kpi-value" style="color: var(--color-amber);">58,8%</div>
+      <div class="kpi-subtext">1.071 de 1.822</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mediação pendente</div>
+      <div class="kpi-value" style="color: var(--color-red);">648</div>
+      <div class="kpi-subtext">requer ação</div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" id="btn-med">Mediação</button>
+    <button class="tab-btn" id="btn-cont">Conteúdo</button>
+    <button class="tab-btn" id="btn-ens">Ensalamento</button>
+  </div>
+
+  <!-- Aba Mediação -->
+  <div class="tab-pane active" id="pane-med">
+    <div class="two-col">
+      <div class="card">
+        <div class="legend" id="legend-med">
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-green);"></div>Concluído</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: #94a3b8;"></div>Pendente</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-amber);"></div>Verificar</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-blue);"></div>Andamento</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-purple);"></div>Aguardando</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-cyan);"></div>Estágio</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartMediacao"></canvas>
+        </div>
       </div>
-      <div class="search-filter">
-        <input type="text" class="search-box" placeholder="Buscar palavra-chave...">
-        <button class="btn-filter"><i class="ph ph-sliders-horizontal"></i> Filtros</button>
+      <div class="card">
+        <table class="table-summary" id="tableMediacao">
+          <thead>
+            <tr>
+              <th>Centro</th>
+              <th>IDs</th>
+              <th>% mediação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
 
-    <div class="content-area">
-      <!-- KPI CARDS -->
-      <div class="kpi-row">
-        <!-- 1 -->
-        <div class="kpi-card" style="border-top-color: var(--color-blue);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Respostas</span>
-            <i class="ph ph-users kpi-icon" style="color: var(--color-blue);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-respostas">0</span>
-          </div>
+  <!-- Aba Conteúdo -->
+  <div class="tab-pane" id="pane-cont">
+    <div class="two-col">
+      <div class="card">
+        <div class="legend" id="legend-cont">
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-green);"></div>Concluído</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-amber);"></div>Pendente</div>
         </div>
-        <!-- 2 -->
-        <div class="kpi-card" style="border-top-color: var(--color-purple);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Disciplinas</span>
-            <i class="ph ph-book-open kpi-icon" style="color: var(--color-purple);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-disciplinas">0</span>
-            <span class="kpi-unit">avaliadas</span>
-          </div>
-        </div>
-        <!-- 3 -->
-        <div class="kpi-card" style="border-top-color: var(--color-cyan);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Centros</span>
-            <i class="ph ph-buildings kpi-icon" style="color: var(--color-cyan);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-centros">0</span>
-          </div>
-        </div>
-        <!-- 4 -->
-        <div class="kpi-card" style="border-top-color: var(--color-green);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Média Likert</span>
-            <i class="ph ph-trend-up kpi-icon" style="color: var(--color-green);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-media">0</span>
-            <span class="kpi-unit">/5</span>
-          </div>
-          <div class="kpi-sub" style="color: var(--color-green);">Excelente</div>
-        </div>
-        <!-- 5 -->
-        <div class="kpi-card" style="border-top-color: var(--color-green);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Favorável</span>
-            <i class="ph ph-thumbs-up kpi-icon" style="color: var(--color-green);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-favoravel">0%</span>
-          </div>
-        </div>
-        <!-- 6 -->
-        <div class="kpi-card" style="border-top-color: var(--color-yellow);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Neutro</span>
-            <i class="ph ph-minus kpi-icon" style="color: var(--color-yellow);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-neutro">0%</span>
-          </div>
-        </div>
-        <!-- 7 -->
-        <div class="kpi-card" style="border-top-color: var(--color-red);">
-          <div class="kpi-card-header">
-            <span class="kpi-title">Desfavorável</span>
-            <i class="ph ph-trend-down kpi-icon" style="color: var(--color-red);"></i>
-          </div>
-          <div class="kpi-value-row">
-            <span class="kpi-value" id="kpi-desfavoravel">0%</span>
-          </div>
+        <div class="chart-container">
+          <canvas id="chartConteudo"></canvas>
         </div>
       </div>
-
-      <!-- CHARTS -->
-      <div class="charts-grid">
-        
-        <div class="chart-card">
-          <h2 class="chart-title">Distribuição de Respostas</h2>
-          <p class="chart-subtitle">Escala Likert — Todas as questões</p>
-          <div class="custom-legend">
-            <div class="legend-item"><div class="legend-dot" style="background-color: var(--likert-1);"></div>Discordo Totalmente</div>
-            <div class="legend-item"><div class="legend-dot" style="background-color: var(--likert-2);"></div>Discordo Parcialmente</div>
-            <div class="legend-item"><div class="legend-dot" style="background-color: var(--likert-3);"></div>Indiferente</div>
-            <div class="legend-item"><div class="legend-dot" style="background-color: var(--likert-4);"></div>Concordo Parcialmente</div>
-            <div class="legend-item"><div class="legend-dot" style="background-color: var(--likert-5);"></div>Concordo Totalmente</div>
-          </div>
-          <div class="chart-container" style="height: 120px;">
-            <canvas id="chartDistribuicao"></canvas>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <h2 class="chart-title">Média por Pergunta</h2>
-          <p class="chart-subtitle">Escala de 1 a 5 — Q1 a Q6</p>
-          <div class="chart-container" style="height: 200px;">
-            <canvas id="chartPerguntas"></canvas>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <h2 class="chart-title">Média Likert por Centro</h2>
-          <p class="chart-subtitle">Score médio por unidade acadêmica</p>
-          <div class="chart-container" style="height: 200px;">
-            <canvas id="chartMediaCentro"></canvas>
-          </div>
-        </div>
-
-        <div class="chart-card">
-          <h2 class="chart-title">Favorabilidade por Centro</h2>
-          <p class="chart-subtitle">% De respostas favoráveis (4 e 5)</p>
-          <div class="chart-container" style="height: 200px;">
-            <canvas id="chartFavorabilidade"></canvas>
-          </div>
-        </div>
-
+      <div class="card">
+        <table class="table-summary" id="tableConteudo">
+          <thead>
+            <tr>
+              <th>Centro</th>
+              <th>Total</th>
+              <th>Pendente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
       </div>
-
     </div>
-  </main>
+  </div>
+
+  <!-- Aba Ensalamento -->
+  <div class="tab-pane" id="pane-ens">
+    <div class="card">
+      <div class="sub-card-grid">
+        <div class="sub-card" style="border-left-color: var(--color-ead);">
+          <div class="sub-card-label">EAD</div>
+          <div class="sub-card-value" style="color: var(--color-ead);">3.096</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-semi);">
+          <div class="sub-card-label">Semipresencial</div>
+          <div class="sub-card-value" style="color: var(--color-semi);">729</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-tecs);">
+          <div class="sub-card-label">Tecnólogos</div>
+          <div class="sub-card-value" style="color: var(--color-tecs);">3.617</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-text);">
+          <div class="sub-card-label">Total geral</div>
+          <div class="sub-card-value" style="color: var(--color-text);">7.442</div>
+        </div>
+      </div>
+      <div class="legend" id="legend-ens">
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-ead);"></div>EAD — 3.096</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-semi);"></div>Semipresencial — 729</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-tecs);"></div>Tecnólogos — 3.617</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chartEnsalamento"></canvas>
+      </div>
+    </div>
+  </div>
 
   <script src="data.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
