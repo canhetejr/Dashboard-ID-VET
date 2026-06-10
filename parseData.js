@@ -23,45 +23,67 @@ const ensalamentoMap = {
   'CTIC': { ead: 0, semi: 0, tecs: 0 }
 };
 
-// Parse center files
+const stripHtml = (html) => html ? html.replace(/<[^>]+>/g, '').trim() : '';
+
+const courses = [];
+
+// 1. Process courses and centers
 Object.keys(centersMap).forEach(center => {
   const filePath = path.join(dir, `${center}.html`);
   if (fs.existsSync(filePath)) {
     const html = fs.readFileSync(filePath, 'utf8');
-    
-    // Each row is a <tr>
     const rows = html.split('<tr');
+    
     rows.forEach(row => {
-      // Find spans that contain status
-      const matches = [...row.matchAll(/<span[^>]*>(CONCLUIDO|PENDENTE|VERIFICAR|ANDAMENTO|AGUARDANDO|ESTAGIO|NAO_OFERTADO|VETERANOS|INGRESSANTES)<\/span>/g)];
-      
-      if (matches.length >= 2) {
-        // Filter out VETERANOS/INGRESSANTES
-        const statuses = matches.map(m => m[1]).filter(s => s !== 'VETERANOS' && s !== 'INGRESSANTES');
+      const tds = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)];
+      if (tds.length >= 10) {
+        const id = stripHtml(tds[0][1]);
+        if (!/^\d+$/.test(id)) return;
         
-        if (statuses.length >= 2) {
-          const conteudo = statuses[0];
-          const mediacao = statuses[1];
-          
-          centersMap[center].total++;
-          
-          if (conteudo === 'CONCLUIDO') centersMap[center].conteudo.ok++;
-          else if (conteudo === 'PENDENTE') centersMap[center].conteudo.pendente++;
-          
-          if (mediacao === 'CONCLUIDO') centersMap[center].mediacao.ok++;
-          else if (mediacao === 'PENDENTE') centersMap[center].mediacao.pendente++;
-          else if (mediacao === 'VERIFICAR') centersMap[center].mediacao.verificar++;
-          else if (mediacao === 'ANDAMENTO') centersMap[center].mediacao.andamento++;
-          else if (mediacao === 'AGUARDANDO') centersMap[center].mediacao.aguardando++;
-          else if (mediacao === 'ESTAGIO') centersMap[center].mediacao.estagio++;
-          else if (mediacao === 'NAO_OFERTADO') centersMap[center].mediacao.naoOfertado++;
+        let offset = 0;
+        if (tds[3] && tds[3][0].includes('freezebar-cell')) {
+          offset = 1;
         }
+
+        const nomeBreve = stripHtml(tds[1][1]);
+        const disciplina = stripHtml(tds[2][1]);
+        const statusConteudo = stripHtml(tds[3 + offset][1]);
+        const grad = stripHtml(tds[4 + offset][1]);
+        const turma = stripHtml(tds[5 + offset][1]);
+        const statusLayout = stripHtml(tds[6 + offset][1]);
+        const obsFabrica = stripHtml(tds[7 + offset][1]);
+        const mediador = stripHtml(tds[8 + offset][1]);
+        const statusMediacao = stripHtml(tds[9 + offset][1]);
+        const obsMediacao = tds[10 + offset] ? stripHtml(tds[10 + offset][1]) : '';
+        const linkHTML = tds[11 + offset] ? tds[11 + offset][1] : '';
+        const linkMatch = linkHTML.match(/href="([^"]+)"/);
+        const link = linkMatch ? linkMatch[1] : '';
+        
+        // Populate courses array
+        courses.push({
+          id, centro: center, nomeBreve, disciplina, statusConteudo, grad, turma, statusLayout, obsFabrica, mediador, statusMediacao, obsMediacao, link
+        });
+
+        // Populate centers map (only if not VETERANOS or INGRESSANTES as statuses)
+        // Wait, the status is specifically statusConteudo and statusMediacao
+        centersMap[center].total++;
+        
+        if (statusConteudo === 'CONCLUIDO') centersMap[center].conteudo.ok++;
+        else if (statusConteudo === 'PENDENTE') centersMap[center].conteudo.pendente++;
+        
+        if (statusMediacao === 'CONCLUIDO') centersMap[center].mediacao.ok++;
+        else if (statusMediacao === 'PENDENTE') centersMap[center].mediacao.pendente++;
+        else if (statusMediacao === 'VERIFICAR') centersMap[center].mediacao.verificar++;
+        else if (statusMediacao === 'ANDAMENTO') centersMap[center].mediacao.andamento++;
+        else if (statusMediacao === 'AGUARDANDO') centersMap[center].mediacao.aguardando++;
+        else if (statusMediacao === 'ESTAGIO') centersMap[center].mediacao.estagio++;
+        else if (statusMediacao === 'NAO_OFERTADO') centersMap[center].mediacao.naoOfertado++;
       }
     });
   }
 });
 
-// Parse ENSALAMENTO
+// 2. Process Ensalamento
 const ensalamentoPath = path.join(dir, 'ENSALAMENTO.html');
 if (fs.existsSync(ensalamentoPath)) {
   const html = fs.readFileSync(ensalamentoPath, 'utf8');
@@ -88,7 +110,7 @@ if (fs.existsSync(ensalamentoPath)) {
   });
 }
 
-// Generate data.js format
+// 3. Output Generation
 const centersArr = Object.keys(centersMap).map(k => ({
   key: k,
   label: centersMap[k].label,
@@ -107,8 +129,9 @@ const ensalamentoArr = Object.keys(ensalamentoMap).map(k => ({
 
 let out = `export const CENTERS = ${JSON.stringify(centersArr, null, 2)};\n\n`;
 out += `export const ENSALAMENTO = ${JSON.stringify(ensalamentoArr, null, 2)};\n\n`;
+out += `export const COURSES = ${JSON.stringify(courses, null, 2)};\n\n`;
 out += `export const PERIODO = '2025.1';\n\n`;
-out += `window.CENTERS = CENTERS;\nwindow.ENSALAMENTO = ENSALAMENTO;\nwindow.PERIODO = PERIODO;\n`;
+out += `window.CENTERS = CENTERS;\nwindow.ENSALAMENTO = ENSALAMENTO;\nwindow.COURSES = COURSES;\nwindow.PERIODO = PERIODO;\n`;
 
 fs.writeFileSync(path.join(__dirname, 'data.js'), out);
 console.log('data.js generated successfully.');

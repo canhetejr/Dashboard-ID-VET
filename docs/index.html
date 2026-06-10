@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qualidade EAD - Visão Geral</title>
+  <title>Qualidade EAD - Dashboard SPA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,19 +18,26 @@
       </div>
     </div>
     
-    <nav class="sidebar-nav">
-      <div class="nav-item active" id="btn-med">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-        Mediação
+    <nav class="sidebar-nav" id="main-nav">
+      <div class="nav-section">Principal</div>
+      <div class="nav-item active" data-view="visao-geral">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
+        Visão Geral
       </div>
-      <div class="nav-item" id="btn-cont">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        Conteúdo
-      </div>
-      <div class="nav-item" id="btn-ens">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-        Ensalamento
-      </div>
+      
+      <div class="nav-section">Centros</div>
+      <div class="nav-item" data-view="centro-CCAS">CCAS</div>
+      <div class="nav-item" data-view="centro-CCS">CCS</div>
+      <div class="nav-item" data-view="centro-CCSA">CCSA</div>
+      <div class="nav-item" data-view="centro-CEHLA">CEHLA</div>
+      <div class="nav-item" data-view="centro-CES">CES</div>
+      <div class="nav-item" data-view="centro-CGJS">CGJS</div>
+      <div class="nav-item" data-view="centro-CTIC">CTIC</div>
+
+      <div class="nav-section">Programas</div>
+      <div class="nav-item" data-view="prog-TCC">TCC</div>
+      <div class="nav-item" data-view="prog-ESTAGIO">Estágio</div>
+      <div class="nav-item" data-view="prog-EXTENSAO">Extensão</div>
     </nav>
   </aside>
 
@@ -39,7 +46,7 @@
     <!-- Topbar Header -->
     <header class="topbar">
       <div class="page-title">
-        <h1>Dashboard Institucional</h1>
+        <h1 id="topbar-title">Visão Geral Institucional</h1>
         <p>Acompanhamento de disciplinas — Período <span id="lbl-periodo">2025.1</span></p>
       </div>
       <div class="topbar-meta" id="lbl-meta">
@@ -49,114 +56,177 @@
 
     <div class="content">
       
-      <!-- KPI Grid -->
-      <div class="kpi-grid">
-        <div class="kpi-card" style="--kpi-color: var(--color-blue);">
-          <div class="kpi-label">Total de IDs</div>
-          <div class="kpi-value" id="kpi-total-ids">0</div>
-          <div class="kpi-subtext">7 centros acadêmicos</div>
+      <!-- ============================================== -->
+      <!-- VIEW: VISÃO GERAL (Dashboard Agregado)         -->
+      <!-- ============================================== -->
+      <div id="view-visao-geral" class="view-container active">
+        
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+          <div class="kpi-card" style="--kpi-color: var(--color-blue);">
+            <div class="kpi-label">Total de IDs</div>
+            <div class="kpi-value" id="kpi-total-ids">0</div>
+            <div class="kpi-subtext">7 centros acadêmicos</div>
+          </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-green);">
+            <div class="kpi-label">Conteúdo concluído</div>
+            <div class="kpi-value" style="color: var(--color-green);" id="kpi-cont-perc">0%</div>
+            <div class="kpi-subtext" id="kpi-cont-sub">0 de 0</div>
+          </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-amber);">
+            <div class="kpi-label">Mediação concluída</div>
+            <div class="kpi-value" style="color: var(--color-amber);" id="kpi-med-perc">0%</div>
+            <div class="kpi-subtext" id="kpi-med-sub">0 de 0</div>
+          </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-red);">
+            <div class="kpi-label">Mediação pendente</div>
+            <div class="kpi-value" style="color: var(--color-red);" id="kpi-med-pend">0</div>
+            <div class="kpi-subtext">requer ação</div>
+          </div>
         </div>
-        <div class="kpi-card" style="--kpi-color: var(--color-green);">
-          <div class="kpi-label">Conteúdo concluído</div>
-          <div class="kpi-value" style="color: var(--color-green);" id="kpi-cont-perc">0%</div>
-          <div class="kpi-subtext" id="kpi-cont-sub">0 de 0</div>
+
+        <!-- Sub-navegação interna (abas) para a Visão Geral -->
+        <div class="sub-nav" id="sub-nav-visao">
+          <div class="sub-nav-item active" data-pane="pane-med">Mediação</div>
+          <div class="sub-nav-item" data-pane="pane-cont">Conteúdo</div>
+          <div class="sub-nav-item" data-pane="pane-ens">Ensalamento</div>
         </div>
-        <div class="kpi-card" style="--kpi-color: var(--color-amber);">
-          <div class="kpi-label">Mediação concluída</div>
-          <div class="kpi-value" style="color: var(--color-amber);" id="kpi-med-perc">0%</div>
-          <div class="kpi-subtext" id="kpi-med-sub">0 de 0</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color: var(--color-red);">
-          <div class="kpi-label">Mediação pendente</div>
-          <div class="kpi-value" style="color: var(--color-red);" id="kpi-med-pend">0</div>
-          <div class="kpi-subtext">requer ação</div>
-        </div>
+
+        <!-- Aba Mediação -->
+        <section id="pane-med" class="tab-pane active">
+          <div class="split-layout">
+            <div class="card">
+              <h2 class="card-title">Status por Centro (Mediação)</h2>
+              <div class="legend-custom" id="legendMediacao"></div>
+              <div class="chart-wrapper">
+                <canvas id="chartMediacao"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="card-title">Resumo Analítico</h2>
+              <div class="table-container">
+                <table id="tableMediacao">
+                  <thead>
+                    <tr>
+                      <th>Centro</th>
+                      <th>IDs</th>
+                      <th>Progresso</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Aba Conteúdo -->
+        <section id="pane-cont" class="tab-pane">
+          <div class="split-layout">
+            <div class="card">
+              <h2 class="card-title">Status por Centro (Conteúdo)</h2>
+              <div class="legend-custom" id="legendConteudo"></div>
+              <div class="chart-wrapper">
+                <canvas id="chartConteudo"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="card-title">Resumo Analítico</h2>
+              <div class="table-container">
+                <table id="tableConteudo">
+                  <thead>
+                    <tr>
+                      <th>Centro</th>
+                      <th>Total</th>
+                      <th>Pendentes</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Aba Ensalamento -->
+        <section id="pane-ens" class="tab-pane">
+          <div class="sub-cards">
+            <div class="sub-card" style="--sub-color: var(--color-ead);">
+              <div class="sub-card-label">EAD</div>
+              <div class="sub-card-value" id="sub-ead">0</div>
+            </div>
+            <div class="sub-card" style="--sub-color: var(--color-semi);">
+              <div class="sub-card-label">Semipresencial</div>
+              <div class="sub-card-value" id="sub-semi">0</div>
+            </div>
+            <div class="sub-card" style="--sub-color: var(--color-tecs);">
+              <div class="sub-card-label">Tecnólogos</div>
+              <div class="sub-card-value" id="sub-tecs">0</div>
+            </div>
+            <div class="sub-card" style="--sub-color: var(--color-text);">
+              <div class="sub-card-label">Total Geral</div>
+              <div class="sub-card-value" id="sub-total">0</div>
+            </div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Distribuição de Ensalamento por Centro</h2>
+            <div class="legend-custom" id="legendEnsalamento"></div>
+            <div class="chart-wrapper" style="min-height: 400px;">
+              <canvas id="chartEnsalamento"></canvas>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <!-- Aba Mediação -->
-      <section id="pane-med" class="tab-pane active">
-        <div class="split-layout">
-          <div class="card">
-            <h2 class="card-title">Status por Centro (Mediação)</h2>
-            <div class="legend-custom" id="legendMediacao"></div>
-            <div class="chart-wrapper">
-              <canvas id="chartMediacao"></canvas>
-            </div>
+      <!-- ============================================== -->
+      <!-- VIEW: DETALHE (Centros ou Programas)           -->
+      <!-- ============================================== -->
+      <div id="view-detalhe" class="view-container">
+        <!-- KPI Grid Dinâmico -->
+        <div class="kpi-grid">
+          <div class="kpi-card" style="--kpi-color: var(--color-blue);">
+            <div class="kpi-label">Total de Turmas</div>
+            <div class="kpi-value" id="detalhe-total">0</div>
+            <div class="kpi-subtext" id="detalhe-subtitle">Filtro aplicado</div>
           </div>
-          <div class="card">
-            <h2 class="card-title">Resumo Analítico</h2>
-            <div class="table-container">
-              <table id="tableMediacao">
-                <thead>
-                  <tr>
-                    <th>Centro</th>
-                    <th>IDs</th>
-                    <th>Progresso</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-green);">
+            <div class="kpi-label">Conteúdo</div>
+            <div class="kpi-value" style="color: var(--color-green);" id="detalhe-cont-perc">0%</div>
+            <div class="kpi-subtext" id="detalhe-cont-sub">0 concluidos</div>
+          </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-amber);">
+            <div class="kpi-label">Mediação</div>
+            <div class="kpi-value" style="color: var(--color-amber);" id="detalhe-med-perc">0%</div>
+            <div class="kpi-subtext" id="detalhe-med-sub">0 concluidos</div>
+          </div>
+          <div class="kpi-card" style="--kpi-color: var(--color-red);">
+            <div class="kpi-label">Mediação Crítica</div>
+            <div class="kpi-value" style="color: var(--color-red);" id="detalhe-med-pend">0</div>
+            <div class="kpi-subtext">pendentes totais</div>
           </div>
         </div>
-      </section>
 
-      <!-- Aba Conteúdo -->
-      <section id="pane-cont" class="tab-pane">
-        <div class="split-layout">
-          <div class="card">
-            <h2 class="card-title">Status por Centro (Conteúdo)</h2>
-            <div class="legend-custom" id="legendConteudo"></div>
-            <div class="chart-wrapper">
-              <canvas id="chartConteudo"></canvas>
-            </div>
-          </div>
-          <div class="card">
-            <h2 class="card-title">Resumo Analítico</h2>
-            <div class="table-container">
-              <table id="tableConteudo">
-                <thead>
-                  <tr>
-                    <th>Centro</th>
-                    <th>Total</th>
-                    <th>Pendentes</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
+        <div class="card" style="margin-top: 24px;">
+          <h2 class="card-title">Listagem de Disciplinas</h2>
+          <div class="table-container">
+            <table id="tableDetalhe">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Disciplina</th>
+                  <th>Turma</th>
+                  <th>Conteúdo</th>
+                  <th>Mediação</th>
+                  <th>Link Moodle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
-
-      <!-- Aba Ensalamento -->
-      <section id="pane-ens" class="tab-pane">
-        <div class="sub-cards">
-          <div class="sub-card" style="--sub-color: var(--color-ead);">
-            <div class="sub-card-label">EAD</div>
-            <div class="sub-card-value" id="sub-ead">0</div>
-          </div>
-          <div class="sub-card" style="--sub-color: var(--color-semi);">
-            <div class="sub-card-label">Semipresencial</div>
-            <div class="sub-card-value" id="sub-semi">0</div>
-          </div>
-          <div class="sub-card" style="--sub-color: var(--color-tecs);">
-            <div class="sub-card-label">Tecnólogos</div>
-            <div class="sub-card-value" id="sub-tecs">0</div>
-          </div>
-          <div class="sub-card" style="--sub-color: var(--color-text);">
-            <div class="sub-card-label">Total Geral</div>
-            <div class="sub-card-value" id="sub-total">0</div>
-          </div>
-        </div>
-        <div class="card">
-          <h2 class="card-title">Distribuição de Ensalamento por Centro</h2>
-          <div class="legend-custom" id="legendEnsalamento"></div>
-          <div class="chart-wrapper" style="min-height: 400px;">
-            <canvas id="chartEnsalamento"></canvas>
-          </div>
-        </div>
-      </section>
+      </div>
 
     </div>
   </main>
