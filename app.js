@@ -202,3 +202,21 @@ setTimeout(() => {
     bar.style.width = bar.getAttribute('data-width');
   });
 }, 100);
+
+// Theme Toggle Logic
+const themeBtn = document.getElementById('theme-toggle');
+themeBtn.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  if (currentTheme === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+  
+  // Re-render charts so they pick up new CSS variables
+  for (let id in Chart.instances) {
+    Chart.instances[id].destroy();
+  }
+  renderCharts();
+});
+
