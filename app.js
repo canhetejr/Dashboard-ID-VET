@@ -30,36 +30,7 @@ document.getElementById('kpi-med-perc').textContent = `${medPerc}%`;
 document.getElementById('kpi-med-sub').textContent = `${medOk} de ${totalIds}`;
 document.getElementById('kpi-med-pend').textContent = medPendente;
 
-// Renderizar Lista de Top Mediadores com Atraso
-const mediatorMap = {};
-COURSES.forEach(c => {
-  if (['PENDENTE', 'AGUARDANDO', 'ANDAMENTO', 'VERIFICAR'].includes(c.statusMediacao)) {
-    const med = c.mediador || 'Sem Atribuição';
-    if (!mediatorMap[med]) mediatorMap[med] = 0;
-    mediatorMap[med]++;
-  }
-});
 
-const topMediators = Object.keys(mediatorMap)
-  .map(name => ({ name, count: mediatorMap[name] }))
-  .sort((a, b) => b.count - a.count)
-  .slice(0, 7); // Top 7 para caber bem no card
-
-const topMedContainer = document.getElementById('top-mediators-list');
-topMedContainer.innerHTML = '';
-topMediators.forEach(m => {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.innerHTML = `
-    <span class="list-item-title">${m.name}</span>
-    <span class="list-item-badge">${m.count} turmas</span>
-  `;
-  topMedContainer.appendChild(div);
-});
-
-if (topMediators.length === 0) {
-  topMedContainer.innerHTML = '<div style="padding:16px; color:var(--color-muted);">Nenhum atraso crítico encontrado.</div>';
-}
 
 // Renderizar Programas Especiais
 let tccCount = 0;
