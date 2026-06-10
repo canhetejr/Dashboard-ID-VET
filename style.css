@@ -89,11 +89,15 @@ body {
 }
 
 .brand-logo {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.brand-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px var(--color-blue));
 }
 
 .brand-title {
@@ -475,5 +479,10 @@ tr:last-child td {
 .sub-nav-item.active {
   background-color: var(--color-text);
   color: var(--color-bg);
+}
+
+
+[data-theme="light"] .brand-logo {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.1));
 }
 
