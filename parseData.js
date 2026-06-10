@@ -83,6 +83,60 @@ Object.keys(centersMap).forEach(center => {
   }
 });
 
+// 1.5 Process TCC courses
+const tccDir = path.join(dir, 'TCC');
+if (fs.existsSync(tccDir)) {
+  const tccFiles = fs.readdirSync(tccDir).filter(f => f.endsWith('.html'));
+  tccFiles.forEach(file => {
+    const html = fs.readFileSync(path.join(tccDir, file), 'utf8');
+    const rows = html.split('<tr');
+    
+    rows.forEach(row => {
+      const tds = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)];
+      if (tds.length >= 8) {
+        const id = stripHtml(tds[0][1]);
+        if (!/^\d+$/.test(id)) return;
+        
+        const nomeBreve = stripHtml(tds[1][1]);
+        const disciplina = stripHtml(tds[2][1]);
+        
+        let center = 'CTIC'; // Default fallback
+        let mediador = 'Sem Atribuição';
+        let statusMediacao = 'PENDENTE';
+        
+        tds.forEach(t => {
+          const val = stripHtml(t[1]).trim();
+          if (centersMap[val]) center = val;
+          else if (val.includes('|')) mediador = val;
+          else if (['CONCLUIDO', 'PENDENTE', 'ANDAMENTO', 'VERIFICAR'].includes(val) && statusMediacao === 'PENDENTE') {
+             statusMediacao = val;
+          }
+        });
+        
+        const linkMatch = row.match(/href="([^"]+)"/);
+        const link = linkMatch ? linkMatch[1] : '';
+        
+        courses.push({
+          id, centro: center, nomeBreve, disciplina, 
+          statusConteudo: 'CONCLUIDO', grad: 'TCC', turma: 'TCC', 
+          statusLayout: 'CONCLUIDO', obsFabrica: '', 
+          mediador, statusMediacao, obsMediacao: '', link
+        });
+        
+        if (centersMap[center]) {
+          centersMap[center].total++;
+          centersMap[center].conteudo.ok++;
+          
+          if (statusMediacao === 'CONCLUIDO') centersMap[center].mediacao.ok++;
+          else if (statusMediacao === 'PENDENTE') centersMap[center].mediacao.pendente++;
+          else if (statusMediacao === 'ANDAMENTO') centersMap[center].mediacao.andamento++;
+          else if (statusMediacao === 'VERIFICAR') centersMap[center].mediacao.verificar++;
+        }
+      }
+    });
+  });
+}
+
 // 2. Process Ensalamento
 const ensalamentoPath = path.join(dir, 'ENSALAMENTO.html');
 if (fs.existsSync(ensalamentoPath)) {
