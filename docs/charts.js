@@ -1,4 +1,4 @@
-import { CENTERS, ENSALAMENTO } from './data.js';
+import { CENTERS, ENSALAMENTO, COURSES } from './data.js';
 
 // Utilitário para pegar a cor real da variável CSS
 function getCssColor(varName) {
@@ -135,6 +135,55 @@ export function renderCharts() {
   });
 
   renderLegend('legendEnsalamento', dsEns);
+
+  // --- Gráfico Perfil (Doughnut) ---
+  let vet = 0, ing = 0, out = 0;
+  COURSES.forEach(c => {
+    const t = (c.turma || '').toUpperCase();
+    if (t.includes('VETERANOS')) vet++;
+    else if (t.includes('INGRESSANTES')) ing++;
+    else out++;
+  });
+
+  const ctxPerfil = document.getElementById('chartPerfil');
+  if (ctxPerfil) {
+    new Chart(ctxPerfil, {
+      type: 'doughnut',
+      data: {
+        labels: ['Veteranos', 'Ingressantes', 'Outros'],
+        datasets: [{
+          data: [vet, ing, out],
+          backgroundColor: [colors.blue, colors.green, colors.border],
+          borderWidth: 0,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: colors.surface,
+            titleColor: colors.text,
+            bodyColor: colors.text,
+            borderColor: colors.border,
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    const legPerfil = document.getElementById('legendPerfil');
+    if (legPerfil) {
+      legPerfil.innerHTML = `
+        <div class="legend-item"><div class="legend-dot" style="background-color: ${colors.blue};"></div>Veteranos (${vet})</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: ${colors.green};"></div>Ingressantes (${ing})</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: ${colors.border};"></div>Outros (${out})</div>
+      `;
+    }
+  }
 }
 
 function renderLegend(containerId, datasets) {
@@ -148,3 +197,6 @@ function renderLegend(containerId, datasets) {
     container.appendChild(el);
   });
 }
+
+// We need to inject the chartPerfil logic inside renderCharts. I will use a script to rewrite it cleanly.
+

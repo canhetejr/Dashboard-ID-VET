@@ -30,49 +30,72 @@ document.getElementById('kpi-med-perc').textContent = `${medPerc}%`;
 document.getElementById('kpi-med-sub').textContent = `${medOk} de ${totalIds}`;
 document.getElementById('kpi-med-pend').textContent = medPendente;
 
-// Renderizar tabelas Visão Geral
-const tbodyMed = document.querySelector('#tableMediacao tbody');
-const tbodyCont = document.querySelector('#tableConteudo tbody');
-tbodyMed.innerHTML = ''; tbodyCont.innerHTML = '';
+// Renderizar Lista de Top Mediadores com Atraso
+const mediatorMap = {};
+COURSES.forEach(c => {
+  if (['PENDENTE', 'AGUARDANDO', 'ANDAMENTO', 'VERIFICAR'].includes(c.statusMediacao)) {
+    const med = c.mediador || 'Sem Atribuição';
+    if (!mediatorMap[med]) mediatorMap[med] = 0;
+    mediatorMap[med]++;
+  }
+});
 
-CENTERS.forEach(c => {
-  const perc = c.total === 0 ? 0 : Math.round((c.mediacao.ok / c.total) * 100);
-  let colorVar = 'var(--color-red)';
-  if (perc >= 85) colorVar = 'var(--color-green)';
-  else if (perc >= 60) colorVar = 'var(--color-amber)';
-  
-  const trMed = document.createElement('tr');
-  trMed.innerHTML = `
-    <td>${c.key}</td>
-    <td>${c.total}</td>
-    <td>
-      <div class="progress-cell">
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" style="width: 0%; background-color: ${colorVar};" data-width="${perc}%"></div>
-        </div>
-        <span style="color: ${colorVar}; font-weight: 600; font-size: 13px;">${perc}%</span>
-      </div>
-    </td>
+const topMediators = Object.keys(mediatorMap)
+  .map(name => ({ name, count: mediatorMap[name] }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 7); // Top 7 para caber bem no card
+
+const topMedContainer = document.getElementById('top-mediators-list');
+topMedContainer.innerHTML = '';
+topMediators.forEach(m => {
+  const div = document.createElement('div');
+  div.className = 'list-item';
+  div.innerHTML = `
+    <span class="list-item-title">${m.name}</span>
+    <span class="list-item-badge">${m.count} turmas</span>
   `;
-  tbodyMed.appendChild(trMed);
-
-  const trCont = document.createElement('tr');
-  const pend = c.conteudo.pendente;
-  const pendHTML = pend === 0 ? `<span style="color: var(--color-green);">—</span>` : `<span style="color: var(--color-amber);">${pend}</span>`;
-  trCont.innerHTML = `<td>${c.key}</td><td>${c.total}</td><td>${pendHTML}</td>`;
-  tbodyCont.appendChild(trCont);
+  topMedContainer.appendChild(div);
 });
 
-// Sub-cards Ensalamento
-let sumEad = 0, sumSemi = 0, sumTecs = 0, sumTotal = 0;
-ENSALAMENTO.forEach(e => {
-  sumEad += e.ead; sumSemi += e.semi; sumTecs += e.tecs;
-  sumTotal += (e.ead + e.semi + e.tecs);
+if (topMediators.length === 0) {
+  topMedContainer.innerHTML = '<div style="padding:16px; color:var(--color-muted);">Nenhum atraso crítico encontrado.</div>';
+}
+
+// Renderizar Programas Especiais
+let tccCount = 0;
+let estagioCount = 0;
+let extensaoCount = 0;
+
+COURSES.forEach(c => {
+  const dUpper = c.disciplina.toUpperCase();
+  const mStatus = c.statusMediacao;
+  
+  if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('MONOGRAFIA')) {
+    tccCount++;
+  }
+  else if (dUpper.includes('ESTÁGIO') || dUpper.includes('ESTAGIO') || mStatus === 'ESTAGIO') {
+    estagioCount++;
+  }
+  else if (dUpper.includes('EXTENSÃO') || dUpper.includes('EXTENSO') || dUpper.includes('EXTENSIONISTA') || mStatus === 'EXTENSÃO' || mStatus === 'EXTENSO') {
+    extensaoCount++;
+  }
 });
-document.getElementById('sub-ead').textContent = sumEad.toLocaleString('pt-BR');
-document.getElementById('sub-semi').textContent = sumSemi.toLocaleString('pt-BR');
-document.getElementById('sub-tecs').textContent = sumTecs.toLocaleString('pt-BR');
-document.getElementById('sub-total').textContent = sumTotal.toLocaleString('pt-BR');
+
+const progsContainer = document.getElementById('special-progs-list');
+progsContainer.innerHTML = `
+  <div class="special-card">
+    <span class="special-card-title">TCC / Monografias</span>
+    <span class="special-card-value">${tccCount}</span>
+  </div>
+  <div class="special-card">
+    <span class="special-card-title">Estágios Sup.</span>
+    <span class="special-card-value">${estagioCount}</span>
+  </div>
+  <div class="special-card">
+    <span class="special-card-title">Extensão</span>
+    <span class="special-card-value">${extensaoCount}</span>
+  </div>
+`;
 
 
 // ==========================================
@@ -83,18 +106,7 @@ const mainNavItems = document.querySelectorAll('#main-nav .nav-item');
 const views = document.querySelectorAll('.view-container');
 const topbarTitle = document.getElementById('topbar-title');
 
-// Sub-navegação interna (Mediação, Conteúdo, Ensalamento) na Visão Geral
-const subNavItems = document.querySelectorAll('.sub-nav-item');
-const tabPanes = document.querySelectorAll('.tab-pane');
-
-subNavItems.forEach(item => {
-  item.addEventListener('click', () => {
-    subNavItems.forEach(i => i.classList.remove('active'));
-    tabPanes.forEach(p => p.classList.remove('active'));
-    item.classList.add('active');
-    document.getElementById(item.dataset.pane).classList.add('active');
-  });
-});
+// Sub-navegação interna - REMOVIDO PARA O BENTO GRID
 
 // Função para renderizar uma lista filtrada no View-Detalhe
 function renderDetalheView(title, filterFn) {

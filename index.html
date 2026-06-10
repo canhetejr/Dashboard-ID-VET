@@ -83,103 +83,62 @@
             <div class="kpi-subtext" id="kpi-med-sub">0 de 0</div>
           </div>
           <div class="kpi-card" style="--kpi-color: var(--color-red);">
-            <div class="kpi-label">Mediação pendente</div>
+            <div class="kpi-label">Mediação Crítica</div>
             <div class="kpi-value" style="color: var(--color-red);" id="kpi-med-pend">0</div>
-            <div class="kpi-subtext">requer ação</div>
+            <div class="kpi-subtext">requer ação prioritária</div>
           </div>
         </div>
 
-        <!-- Sub-navegação interna (abas) para a Visão Geral -->
-        <div class="sub-nav" id="sub-nav-visao">
-          <div class="sub-nav-item active" data-pane="pane-med">Mediação</div>
-          <div class="sub-nav-item" data-pane="pane-cont">Conteúdo</div>
-          <div class="sub-nav-item" data-pane="pane-ens">Ensalamento</div>
-        </div>
-
-        <!-- Aba Mediação -->
-        <section id="pane-med" class="tab-pane active">
-          <div class="split-layout">
-            <div class="card">
-              <h2 class="card-title">Status por Centro (Mediação)</h2>
-              <div class="legend-custom" id="legendMediacao"></div>
-              <div class="chart-wrapper">
-                <canvas id="chartMediacao"></canvas>
-              </div>
-            </div>
-            <div class="card">
-              <h2 class="card-title">Resumo Analítico</h2>
-              <div class="table-container">
-                <table id="tableMediacao">
-                  <thead>
-                    <tr>
-                      <th>Centro</th>
-                      <th>IDs</th>
-                      <th>Progresso</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
+        <div class="dashboard-grid">
+          
+          <!-- Linha 1 -->
+          <div class="card card-wide">
+            <h2 class="card-title">Status de Mediação por Centro</h2>
+            <div class="legend-custom" id="legendMediacao"></div>
+            <div class="chart-wrapper">
+              <canvas id="chartMediacao"></canvas>
             </div>
           </div>
-        </section>
-
-        <!-- Aba Conteúdo -->
-        <section id="pane-cont" class="tab-pane">
-          <div class="split-layout">
-            <div class="card">
-              <h2 class="card-title">Status por Centro (Conteúdo)</h2>
-              <div class="legend-custom" id="legendConteudo"></div>
-              <div class="chart-wrapper">
-                <canvas id="chartConteudo"></canvas>
-              </div>
-            </div>
-            <div class="card">
-              <h2 class="card-title">Resumo Analítico</h2>
-              <div class="table-container">
-                <table id="tableConteudo">
-                  <thead>
-                    <tr>
-                      <th>Centro</th>
-                      <th>Total</th>
-                      <th>Pendentes</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
+          <div class="card card-narrow">
+            <h2 class="card-title">Top Pendências (Atraso)</h2>
+            <div class="list-container" id="top-mediators-list">
+              <!-- Renderizado via JS -->
             </div>
           </div>
-        </section>
 
-        <!-- Aba Ensalamento -->
-        <section id="pane-ens" class="tab-pane">
-          <div class="sub-cards">
-            <div class="sub-card" style="--sub-color: var(--color-ead);">
-              <div class="sub-card-label">EAD</div>
-              <div class="sub-card-value" id="sub-ead">0</div>
+          <!-- Linha 2 -->
+          <div class="card card-narrow">
+            <h2 class="card-title">Perfil: Veteranos vs Ingressantes</h2>
+            <div class="chart-wrapper" style="min-height: 250px;">
+              <canvas id="chartPerfil"></canvas>
             </div>
-            <div class="sub-card" style="--sub-color: var(--color-semi);">
-              <div class="sub-card-label">Semipresencial</div>
-              <div class="sub-card-value" id="sub-semi">0</div>
-            </div>
-            <div class="sub-card" style="--sub-color: var(--color-tecs);">
-              <div class="sub-card-label">Tecnólogos</div>
-              <div class="sub-card-value" id="sub-tecs">0</div>
-            </div>
-            <div class="sub-card" style="--sub-color: var(--color-text);">
-              <div class="sub-card-label">Total Geral</div>
-              <div class="sub-card-value" id="sub-total">0</div>
+            <div class="legend-custom" id="legendPerfil"></div>
+          </div>
+          <div class="card card-wide">
+            <h2 class="card-title">Status de Conteúdo por Centro</h2>
+            <div class="legend-custom" id="legendConteudo"></div>
+            <div class="chart-wrapper">
+              <canvas id="chartConteudo"></canvas>
             </div>
           </div>
-          <div class="card">
-            <h2 class="card-title">Distribuição de Ensalamento por Centro</h2>
+
+          <!-- Linha 3 -->
+          <div class="card card-wide">
+            <h2 class="card-title">Ensalamento por Centro</h2>
             <div class="legend-custom" id="legendEnsalamento"></div>
-            <div class="chart-wrapper" style="min-height: 400px;">
+            <div class="chart-wrapper">
               <canvas id="chartEnsalamento"></canvas>
             </div>
           </div>
-        </section>
+          <div class="card card-narrow">
+            <h2 class="card-title">Programas Especiais</h2>
+            <div class="special-cards" id="special-progs-list">
+              <!-- Renderizado via JS -->
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
       <!-- ============================================== -->

@@ -499,3 +499,73 @@ body, .sidebar, .card, .kpi-card, .topbar, .view-container, .table-container, th
   transform: rotate(45deg) scale(0.9);
 }
 
+
+/* Bento Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* List Containers */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 350px;
+}
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.list-item-title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 14px;
+}
+.list-item-badge {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-red);
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Special Programs Cards */
+.special-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.special-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  border-left: 4px solid var(--color-blue);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.special-card-title {
+  font-size: 14px;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+.special-card-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+
