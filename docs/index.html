@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Qualidade EAD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Qualidade EAD · UniCV</h1>
+      <p>Acompanhamento de disciplinas — Período 2025.1</p>
+    </div>
+    <div class="header-right">
+      2.121 IDs · 7 centros
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total de IDs</div>
+      <div class="kpi-value" style="color: var(--color-text);">2.121</div>
+      <div class="kpi-subtext">7 centros acadêmicos</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Conteúdo concluído</div>
+      <div class="kpi-value" style="color: var(--color-green);">98,1%</div>
+      <div class="kpi-subtext">1.788 de 1.822</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mediação concluída</div>
+      <div class="kpi-value" style="color: var(--color-amber);">58,8%</div>
+      <div class="kpi-subtext">1.071 de 1.822</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mediação pendente</div>
+      <div class="kpi-value" style="color: var(--color-red);">648</div>
+      <div class="kpi-subtext">requer ação</div>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" id="btn-med">Mediação</button>
+    <button class="tab-btn" id="btn-cont">Conteúdo</button>
+    <button class="tab-btn" id="btn-ens">Ensalamento</button>
+  </div>
+
+  <!-- Aba Mediação -->
+  <div class="tab-pane active" id="pane-med">
+    <div class="two-col">
+      <div class="card">
+        <div class="legend" id="legend-med">
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-green);"></div>Concluído</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: #94a3b8;"></div>Pendente</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-amber);"></div>Verificar</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-blue);"></div>Andamento</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-purple);"></div>Aguardando</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-cyan);"></div>Estágio</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartMediacao"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <table class="table-summary" id="tableMediacao">
+          <thead>
+            <tr>
+              <th>Centro</th>
+              <th>IDs</th>
+              <th>% mediação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aba Conteúdo -->
+  <div class="tab-pane" id="pane-cont">
+    <div class="two-col">
+      <div class="card">
+        <div class="legend" id="legend-cont">
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-green);"></div>Concluído</div>
+          <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-amber);"></div>Pendente</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartConteudo"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <table class="table-summary" id="tableConteudo">
+          <thead>
+            <tr>
+              <th>Centro</th>
+              <th>Total</th>
+              <th>Pendente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aba Ensalamento -->
+  <div class="tab-pane" id="pane-ens">
+    <div class="card">
+      <div class="sub-card-grid">
+        <div class="sub-card" style="border-left-color: var(--color-ead);">
+          <div class="sub-card-label">EAD</div>
+          <div class="sub-card-value" style="color: var(--color-ead);">3.096</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-semi);">
+          <div class="sub-card-label">Semipresencial</div>
+          <div class="sub-card-value" style="color: var(--color-semi);">729</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-tecs);">
+          <div class="sub-card-label">Tecnólogos</div>
+          <div class="sub-card-value" style="color: var(--color-tecs);">3.617</div>
+        </div>
+        <div class="sub-card" style="border-left-color: var(--color-text);">
+          <div class="sub-card-label">Total geral</div>
+          <div class="sub-card-value" style="color: var(--color-text);">7.442</div>
+        </div>
+      </div>
+      <div class="legend" id="legend-ens">
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-ead);"></div>EAD — 3.096</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-semi);"></div>Semipresencial — 729</div>
+        <div class="legend-item"><div class="legend-dot" style="background-color: var(--color-tecs);"></div>Tecnólogos — 3.617</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chartEnsalamento"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
