@@ -30,39 +30,7 @@ Painel operacional da equipe de Qualidade EAD. Lido por pessoas técnicas (não 
 - Nomes de classes CSS em `kebab-case`; variáveis JS em `camelCase`
 - Comentários em português
 
-## Paleta de cores (custom properties em `:root`)
-```css
---color-bg:        #0f1321;
---color-surface:   #141828;
---color-card:      #1a1f35;
---color-border:    #1e2540;
---color-text:      #e2e8f0;
---color-muted:     #64748b;
---color-hint:      #475569;
---color-green:     #22c55e;
---color-amber:     #f59e0b;
---color-red:       #ef4444;
---color-blue:      #60a5fa;
---color-purple:    #c084fc;
---color-cyan:      #22d3ee;
---color-ead:       #378add;
---color-semi:      #c084fc;
---color-tecs:      #f59e0b;
-```
 
-## Status de Mediação → cor
-| Status         | Variável CSS         |
-|----------------|----------------------|
-| CONCLUIDO      | `--color-green`      |
-| PENDENTE       | `#94a3b8` (hardcode) |
-| VERIFICAR      | `--color-amber`      |
-| ANDAMENTO      | `--color-blue`       |
-| AGUARDANDO     | `--color-purple`     |
-| ESTAGIO        | `--color-cyan`       |
-| NAO_OFERTADO   | `--color-red`        |
-
-## Referência de dados
-Ver `SPEC.md` — seção "Dados dos Centros" para todos os valores numéricos.
 
 ## Após cada arquivo criado
 Rodar `agy inspect` se o comportamento do agente parecer inesperado.
