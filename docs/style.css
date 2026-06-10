@@ -486,3 +486,16 @@ tr:last-child td {
   filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.1));
 }
 
+
+/* Suavização da Transição de Temas */
+body, .sidebar, .card, .kpi-card, .topbar, .view-container, .table-container, th, td, .btn-theme, .sub-card, .topbar-meta {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.btn-theme svg {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-theme:active svg {
+  transform: rotate(45deg) scale(0.9);
+}
+
