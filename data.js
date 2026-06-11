@@ -29323,7 +29323,8 @@ export const COURSES = [
     "mediador": "Fátima Calicchio | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_fatima@unicive.edu.br"
+    "link": "mailto:prof_fatima@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17744",
@@ -29338,7 +29339,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicive.edu.br"
+    "link": "mailto:prof_jessica@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17745",
@@ -29353,7 +29355,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicive.edu.br"
+    "link": "mailto:prof_jessica@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17746",
@@ -29368,7 +29371,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicive.edu.br"
+    "link": "mailto:prof_jessica@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17747",
@@ -29383,7 +29387,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicive.edu.br"
+    "link": "mailto:prof_jessica@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17742",
@@ -29398,7 +29403,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17743",
@@ -29413,7 +29419,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17907",
@@ -29428,7 +29435,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17908",
@@ -29443,7 +29451,8 @@ export const COURSES = [
     "mediador": "Pollyana Mayara Nunhes | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_pollyananunhes@unicive.edu.br"
+    "link": "mailto:prof_pollyananunhes@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17906",
@@ -29458,7 +29467,8 @@ export const COURSES = [
     "mediador": "Rafael Thiago Cezarin | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_rafael@unicv.edu.br"
+    "link": "mailto:prof_rafael@unicv.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17751",
@@ -29473,7 +29483,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicive.edu.br"
+    "link": "mailto:prof_saulo@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17752",
@@ -29488,7 +29499,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "VERIFICAR",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicive.edu.br"
+    "link": "mailto:prof_saulo@unicive.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "13862",
@@ -29503,7 +29515,8 @@ export const COURSES = [
     "mediador": "Suzie Keilla Viana Da Silva | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_suzie@unicv.edu.br"
+    "link": "mailto:prof_suzie@unicv.edu.br",
+    "tccCategory": "Disciplinas de Pesquisas"
   },
   {
     "id": "17069",
@@ -29518,7 +29531,8 @@ export const COURSES = [
     "mediador": "Suzie Silva | UniCV",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_suzie@unicv.edu.br"
+    "link": "mailto:prof_suzie@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17181",
@@ -29533,7 +29547,8 @@ export const COURSES = [
     "mediador": "Pollyana Mayara Nunhes | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_pollyananunhes@unicv.edu.br"
+    "link": "mailto:prof_pollyananunhes@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17183",
@@ -29548,7 +29563,8 @@ export const COURSES = [
     "mediador": "Pollyana Mayara Nunhes | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_pollyananunhes@unicv.edu.br"
+    "link": "mailto:prof_pollyananunhes@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17143",
@@ -29563,7 +29579,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17184",
@@ -29578,7 +29595,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17185",
@@ -29593,7 +29611,8 @@ export const COURSES = [
     "mediador": "Luiz Henrique Paloschi Tomé | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_paloschi@unicv.edu.br"
+    "link": "mailto:prof_paloschi@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17917",
@@ -29608,7 +29627,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicv.edu.br"
+    "link": "mailto:prof_jessica@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17918",
@@ -29623,7 +29643,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicv.edu.br"
+    "link": "mailto:prof_jessica@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17188",
@@ -29638,7 +29659,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicv.edu.br"
+    "link": "mailto:prof_jessica@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17920",
@@ -29653,7 +29675,8 @@ export const COURSES = [
     "mediador": "Jéssica Pavão Antoniassi | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_jessica@unicv.edu.br"
+    "link": "mailto:prof_jessica@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17916",
@@ -29668,7 +29691,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicv.edu.br"
+    "link": "mailto:prof_saulo@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17186",
@@ -29683,7 +29707,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicv.edu.br"
+    "link": "mailto:prof_saulo@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17192",
@@ -29698,7 +29723,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicv.edu.br"
+    "link": "mailto:prof_saulo@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17187",
@@ -29713,7 +29739,8 @@ export const COURSES = [
     "mediador": "Saulo Henrique Justiniano Silva | Unicive",
     "statusMediacao": "PENDENTE",
     "obsMediacao": "",
-    "link": "mailto:prof_saulo@unicv.edu.br"
+    "link": "mailto:prof_saulo@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17189",
@@ -29728,7 +29755,8 @@ export const COURSES = [
     "mediador": "Felipe Santos | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_felipe@unicv.edu.br"
+    "link": "mailto:prof_felipe@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17190",
@@ -29743,7 +29771,8 @@ export const COURSES = [
     "mediador": "Felipe Santos | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_felipe@unicv.edu.br"
+    "link": "mailto:prof_felipe@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17280",
@@ -29758,7 +29787,8 @@ export const COURSES = [
     "mediador": "Felipe Santos | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_felipe@unicv.edu.br"
+    "link": "mailto:prof_felipe@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "17191",
@@ -29773,7 +29803,8 @@ export const COURSES = [
     "mediador": "Rafael Thiago Cezarin | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_rafael@unicv.edu.br"
+    "link": "mailto:prof_rafael@unicv.edu.br",
+    "tccCategory": "IDs"
   },
   {
     "id": "18258",
@@ -29788,11 +29819,12 @@ export const COURSES = [
     "mediador": "Rafael Thiago Cezarin | Unicive",
     "statusMediacao": "CONCLUIDO",
     "obsMediacao": "",
-    "link": "mailto:prof_rafael@unicv.edu.br"
+    "link": "mailto:prof_rafael@unicv.edu.br",
+    "tccCategory": "TCCs 2° graduação"
   }
 ];
 
-export const PERIODO = '2025.1';
+export const PERIODO = '2026.3';
 
 window.CENTERS = CENTERS;
 window.ENSALAMENTO = ENSALAMENTO;

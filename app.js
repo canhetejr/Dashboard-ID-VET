@@ -3,7 +3,7 @@ import { renderCharts } from './charts.js';
 
 // Setup de dados Iniciais Globais
 document.getElementById('lbl-periodo').textContent = PERIODO;
-document.getElementById('lbl-meta').innerHTML = `Atualizado automaticamente`;
+document.getElementById('lbl-meta').innerHTML = `Período: ${PERIODO}`;
 
 // Elementos da Visão Geral
 let totalIds = 0;
@@ -73,7 +73,7 @@ progsContainer.innerHTML = `
 // ROTEAMENTO (SPA) E NAVEGAÇÃO
 // ==========================================
 
-const mainNavItems = document.querySelectorAll('#main-nav .nav-item');
+const mainNavItems = document.querySelectorAll('#main-nav .nav-item:not(.has-submenu)');
 const views = document.querySelectorAll('.view-container');
 const topbarTitle = document.getElementById('topbar-title');
 
@@ -127,9 +127,28 @@ function renderDetalheView(title, filterFn) {
   document.getElementById('detalhe-med-pend').textContent = mPendente;
 }
 
+// Submenu Toggle Logic
+const navTccToggle = document.getElementById('nav-tcc-toggle');
+const submenuTcc = document.getElementById('submenu-tcc');
+const chevron = navTccToggle.querySelector('.chevron');
+
+navTccToggle.addEventListener('click', () => {
+  if (submenuTcc.style.display === 'none') {
+    submenuTcc.style.display = 'flex';
+    chevron.style.transform = 'rotate(180deg)';
+  } else {
+    submenuTcc.style.display = 'none';
+    chevron.style.transform = 'rotate(0deg)';
+  }
+});
+
 // Lidar com clique na Sidebar Principal
 mainNavItems.forEach(navBtn => {
   navBtn.addEventListener('click', () => {
+    // Remove active do submenu-tcc master se clicar em outra coisa fora dele
+    if(!navBtn.classList.contains('sub-nav-item')) {
+       document.querySelectorAll('.sub-nav-item').forEach(b => b.classList.remove('active'));
+    }
     // UI state update
     mainNavItems.forEach(b => b.classList.remove('active'));
     navBtn.classList.add('active');
@@ -140,7 +159,7 @@ mainNavItems.forEach(navBtn => {
     
     if (viewId === 'visao-geral') {
       document.getElementById('view-visao-geral').classList.add('active');
-      topbarTitle.textContent = 'Visão Geral Institucional';
+      topbarTitle.textContent = 'Visão Geral';
     } else {
       document.getElementById('view-detalhe').classList.add('active');
       
@@ -150,21 +169,29 @@ mainNavItems.forEach(navBtn => {
         renderDetalheView(`Centro: ${centroId}`, (c) => c.centro === centroId);
       } 
       else if (viewId === 'prog-TCC') {
-        renderDetalheView('Programa: Trabalho de Conclusão (TCC)', (c) => 
-          c.disciplina.toUpperCase().includes('TCC') || 
-          c.disciplina.toUpperCase().includes('TRABALHO DE CONCLUS') || 
-          c.disciplina.toUpperCase().includes('MONOGRAFIA')
+        renderDetalheView('Trabalho de Conclusão de Curso', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'IDs'
+        );
+      }
+      else if (viewId === 'prog-TCC2') {
+        renderDetalheView('TCC 2ª Graduação', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'TCCs 2° graduação'
+        );
+      }
+      else if (viewId === 'prog-PESQ') {
+        renderDetalheView('Disciplinas de Pesquisa', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'Disciplinas de Pesquisas'
         );
       }
       else if (viewId === 'prog-ESTAGIO') {
-        renderDetalheView('Programa: Estágios Supervisionados', (c) => 
+        renderDetalheView('Estágios Supervisionados', (c) => 
           c.disciplina.toUpperCase().includes('ESTÁGIO') || 
           c.disciplina.toUpperCase().includes('ESTAGIO') || 
           c.statusMediacao === 'ESTAGIO'
         );
       }
       else if (viewId === 'prog-EXTENSAO') {
-        renderDetalheView('Programa: Atividades de Extensão', (c) => 
+        renderDetalheView('Atividades de Extensão', (c) => 
           c.disciplina.toUpperCase().includes('EXTENSÃO') || 
           c.disciplina.toUpperCase().includes('EXTENSO') || 
           c.disciplina.toUpperCase().includes('EXTENSIONISTA') || 

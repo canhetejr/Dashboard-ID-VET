@@ -116,11 +116,14 @@ if (fs.existsSync(tccDir)) {
         const linkMatch = row.match(/href="([^"]+)"/);
         const link = linkMatch ? linkMatch[1] : '';
         
+        const subCategoria = file.replace('.html', '').trim();
+        
         courses.push({
           id, centro: center, nomeBreve, disciplina, 
           statusConteudo: 'CONCLUIDO', grad: 'TCC', turma: 'TCC', 
           statusLayout: 'CONCLUIDO', obsFabrica: '', 
-          mediador, statusMediacao, obsMediacao: '', link
+          mediador, statusMediacao, obsMediacao: '', link,
+          tccCategory: subCategoria
         });
         
         if (centersMap[center]) {
