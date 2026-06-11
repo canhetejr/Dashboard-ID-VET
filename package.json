@@ -1,0 +1,28 @@
+{
+  "name": "dashboard-id-vet",
+  "version": "1.0.0",
+  "description": "Dashboard estático para acompanhamento de disciplinas do Moodle da UniCV no período 2025.1.",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update": "node updateData.js",
+    "start": "npx serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canhetejr/Dashboard-ID-VET.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/canhetejr/Dashboard-ID-VET/issues"
+  },
+  "homepage": "https://github.com/canhetejr/Dashboard-ID-VET#readme",
+  "dependencies": {
+    "googleapis": "^173.0.0"
+  }
+}

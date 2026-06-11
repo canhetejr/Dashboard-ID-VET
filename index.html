@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qualidade EAD - Dashboard SPA</title>
+  <title>Qualidade EAD - Dashboard ID VET</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -14,7 +14,7 @@
     <div class="sidebar-brand">
       <img src="logo.png" alt="Logo UniCV" class="brand-logo">
       <div>
-        <div class="brand-title">ID VET 26.3</div>
+        <div class="brand-title">ID VET</div>
         <div class="brand-subtitle">Unicive</div>
       </div>
     </div>
@@ -56,10 +56,10 @@
     <header class="topbar">
       <div class="page-title">
         <h1 id="topbar-title">Visão Geral</h1>
-        <p>Acompanhamento Acadêmico — Período <span id="lbl-periodo">2025.1</span></p>
+        <p>Acompanhamento Acadêmico — Período <select id="tab-selector" class="period-select"></select></p>
       </div>
       <div style="display: flex; gap: 16px; align-items: center;">
-        <div class="topbar-meta" id="lbl-meta">Carregando...</div>
+        <div class="topbar-meta" id="lbl-meta" style="display:none;"></div>
         <button id="theme-toggle" class="btn-theme" title="Alternar Tema">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
         </button>
@@ -197,8 +197,8 @@
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script type="module" src="data.js"></script>
-  <script type="module" src="charts.js"></script>
-  <script type="module" src="app.js"></script>
+  <script src="data.js" defer></script>
+  <script src="charts.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>

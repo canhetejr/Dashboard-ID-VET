@@ -1,85 +1,149 @@
-import { CENTERS, ENSALAMENTO, COURSES, PERIODO } from './data.js';
-import { renderCharts } from './charts.js';
-
-// Setup de dados Iniciais Globais
-document.getElementById('lbl-periodo').textContent = PERIODO;
-document.getElementById('lbl-meta').innerHTML = `Atualizado automaticamente`;
-
-// Elementos da Visão Geral
-let totalIds = 0;
-let contOk = 0;
-let contPendente = 0;
-let medOk = 0;
-let medPendente = 0;
-
-CENTERS.forEach(c => {
-  totalIds += c.total;
-  contOk += c.conteudo.ok;
-  contPendente += c.conteudo.pendente;
-  medOk += c.mediacao.ok;
-  medPendente += (c.mediacao.pendente + c.mediacao.verificar + c.mediacao.andamento + c.mediacao.aguardando);
-});
-
-// Preencher KPI Cards da Visão Geral
-document.getElementById('kpi-total-ids').textContent = totalIds.toLocaleString('pt-BR');
-const contPerc = ((contOk / totalIds) * 100).toFixed(1);
-document.getElementById('kpi-cont-perc').textContent = `${contPerc}%`;
-document.getElementById('kpi-cont-sub').textContent = `${contOk} de ${totalIds}`;
-const medPerc = ((medOk / totalIds) * 100).toFixed(1);
-document.getElementById('kpi-med-perc').textContent = `${medPerc}%`;
-document.getElementById('kpi-med-sub').textContent = `${medOk} de ${totalIds}`;
-document.getElementById('kpi-med-pend').textContent = medPendente;
 
 
+let CENTERS = [];
+let ENSALAMENTO = [];
+let COURSES = [];
+let PERIODO = '';
 
-// Renderizar Programas Especiais
-let tccCount = 0;
-let estagioCount = 0;
-let extensaoCount = 0;
+function initDashboard(periodName) {
+  try {
+    const data = DATA_BY_TAB[periodName];
+    if (!data) {
+      document.getElementById('kpi-total-ids').textContent = "NO DATA";
+      return;
+    }
 
-COURSES.forEach(c => {
-  const dUpper = c.disciplina.toUpperCase();
-  const mStatus = c.statusMediacao;
+    CENTERS = data.CENTERS;
+    ENSALAMENTO = data.ENSALAMENTO;
+    COURSES = data.COURSES;
+    PERIODO = data.PERIODO;
+
+  // Atualizar UI
+  const brandTitle = document.querySelector('.brand-title');
+  if (brandTitle) brandTitle.textContent = `ID VET ${periodName}`;
+  const titleElem = document.getElementById('topbar-title');
+  if (titleElem.textContent === 'Visão Geral') {
+    // just normal
+  }
+
+  // Elementos da Visão Geral
+  let totalIds = 0;
+  let contOk = 0;
+  let contPendente = 0;
+  let medOk = 0;
+  let medPendente = 0;
+
+  CENTERS.forEach(c => {
+    totalIds += c.total;
+    contOk += c.conteudo.ok;
+    contPendente += c.conteudo.pendente;
+    medOk += c.mediacao.ok;
+    medPendente += (c.mediacao.pendente + c.mediacao.verificar + c.mediacao.andamento + c.mediacao.aguardando);
+  });
+
+  // Preencher KPI Cards da Visão Geral
+  document.getElementById('kpi-total-ids').textContent = totalIds.toLocaleString('pt-BR');
+  const contPerc = totalIds > 0 ? ((contOk / totalIds) * 100).toFixed(1) : 0;
+  document.getElementById('kpi-cont-perc').textContent = `${contPerc}%`;
+  document.getElementById('kpi-cont-sub').textContent = `${contOk} de ${totalIds}`;
   
-  if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('MONOGRAFIA')) {
-    tccCount++;
-  }
-  else if (dUpper.includes('ESTÁGIO') || dUpper.includes('ESTAGIO') || mStatus === 'ESTAGIO') {
-    estagioCount++;
-  }
-  else if (dUpper.includes('EXTENSÃO') || dUpper.includes('EXTENSO') || dUpper.includes('EXTENSIONISTA') || mStatus === 'EXTENSÃO' || mStatus === 'EXTENSO') {
-    extensaoCount++;
-  }
-});
+  const medPerc = totalIds > 0 ? ((medOk / totalIds) * 100).toFixed(1) : 0;
+  document.getElementById('kpi-med-perc').textContent = `${medPerc}%`;
+  document.getElementById('kpi-med-sub').textContent = `${medOk} de ${totalIds}`;
+  document.getElementById('kpi-med-pend').textContent = medPendente;
 
-const progsContainer = document.getElementById('special-progs-list');
-progsContainer.innerHTML = `
-  <div class="special-card">
-    <span class="special-card-title">TCC / Monografias</span>
-    <span class="special-card-value">${tccCount}</span>
-  </div>
-  <div class="special-card">
-    <span class="special-card-title">Estágios Sup.</span>
-    <span class="special-card-value">${estagioCount}</span>
-  </div>
-  <div class="special-card">
-    <span class="special-card-title">Extensão</span>
-    <span class="special-card-value">${extensaoCount}</span>
-  </div>
-`;
+  // Renderizar Programas Especiais
+  let tccCount = 0;
+  let estagioCount = 0;
+  let extensaoCount = 0;
 
+  COURSES.forEach(c => {
+    const dUpper = c.disciplina.toUpperCase();
+    const mStatus = c.statusMediacao;
+    
+    if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('MONOGRAFIA')) {
+      tccCount++;
+    }
+    else if (dUpper.includes('ESTÁGIO') || dUpper.includes('ESTAGIO') || mStatus === 'ESTAGIO') {
+      estagioCount++;
+    }
+    else if (dUpper.includes('EXTENSÃO') || dUpper.includes('EXTENSO') || dUpper.includes('EXTENSIONISTA') || mStatus === 'EXTENSÃO' || mStatus === 'EXTENSO') {
+      extensaoCount++;
+    }
+  });
+
+  const progsContainer = document.getElementById('special-progs-list');
+  if(progsContainer) {
+    progsContainer.innerHTML = `
+      <div class="special-card">
+        <span class="special-card-title">TCC / Monografias</span>
+        <span class="special-card-value">${tccCount}</span>
+      </div>
+      <div class="special-card">
+        <span class="special-card-title">Estágios Sup.</span>
+        <span class="special-card-value">${estagioCount}</span>
+      </div>
+      <div class="special-card">
+        <span class="special-card-title">Extensão</span>
+        <span class="special-card-value">${extensaoCount}</span>
+      </div>
+    `;
+  }
+
+  // Recarregar a view detalhe se estiver ativa
+  const activeNavItem = document.querySelector('.nav-item.active, .sub-nav-item.active');
+  if (activeNavItem && activeNavItem.dataset.view !== 'visao-geral') {
+    activeNavItem.click(); // forçar re-render da tabela
+  }
+
+  // Destruir os gráficos antigos se houver
+  for (let id in Chart.instances) {
+    Chart.instances[id].destroy();
+  }
+
+  renderCharts(CENTERS, ENSALAMENTO, COURSES);
+  } catch (err) {
+    document.getElementById('kpi-total-ids').innerHTML = `<span style="font-size:12px;color:red">${err.message}</span>`;
+    console.error(err);
+  }
+}
+
+// Inicialização do seletor
+try {
+  const tabSelector = document.getElementById('tab-selector');
+  const tabNames = Object.keys(DATA_BY_TAB || {});
+
+  if (tabNames.length > 0) {
+    tabNames.forEach(tab => {
+      const opt = document.createElement('option');
+      opt.value = tab;
+      opt.textContent = tab;
+      tabSelector.appendChild(opt);
+    });
+    
+    tabSelector.addEventListener('change', (e) => {
+      initDashboard(e.target.value);
+    });
+
+    // Carrega a última aba por padrão (geralmente a mais recente)
+    const defaultTab = tabNames[tabNames.length - 1];
+    tabSelector.value = defaultTab;
+    initDashboard(defaultTab);
+  } else {
+    document.getElementById('kpi-total-ids').innerHTML = `<span style="font-size:12px;color:orange">DATA_BY_TAB vazio ou undefined</span>`;
+  }
+} catch (e) {
+  document.getElementById('kpi-total-ids').innerHTML = `<span style="font-size:12px;color:red">${e.message}</span>`;
+}
 
 // ==========================================
 // ROTEAMENTO (SPA) E NAVEGAÇÃO
 // ==========================================
 
-const mainNavItems = document.querySelectorAll('#main-nav .nav-item');
+const mainNavItems = document.querySelectorAll('#main-nav .nav-item:not(.has-submenu)');
 const views = document.querySelectorAll('.view-container');
 const topbarTitle = document.getElementById('topbar-title');
 
-// Sub-navegação interna - REMOVIDO PARA O BENTO GRID
-
-// Função para renderizar uma lista filtrada no View-Detalhe
 function renderDetalheView(title, filterFn) {
   const filtered = COURSES.filter(filterFn);
   
@@ -91,6 +155,7 @@ function renderDetalheView(title, filterFn) {
   let mPendente = 0;
   
   const tbody = document.querySelector('#tableDetalhe tbody');
+  if(!tbody) return;
   tbody.innerHTML = '';
   
   filtered.forEach(c => {
@@ -101,6 +166,7 @@ function renderDetalheView(title, filterFn) {
     const cColor = c.statusConteudo === 'CONCLUIDO' ? 'var(--color-green)' : (c.statusConteudo === 'PENDENTE' ? 'var(--color-amber)' : 'var(--color-muted)');
     const mColor = c.statusMediacao === 'CONCLUIDO' ? 'var(--color-green)' : (['PENDENTE','VERIFICAR','ANDAMENTO','AGUARDANDO'].includes(c.statusMediacao) ? 'var(--color-red)' : 'var(--color-muted)');
 
+    const linkHtml = c.link ? '<a href="' + c.link + '" target="_blank" style="color:var(--color-blue); text-decoration:none;">Acessar</a>' : '-';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${c.id}</td>
@@ -108,7 +174,7 @@ function renderDetalheView(title, filterFn) {
       <td>${c.centro}</td>
       <td><span style="color: ${cColor}; font-weight:600;">${c.statusConteudo || '-'}</span></td>
       <td><span style="color: ${mColor}; font-weight:600;">${c.statusMediacao || '-'}</span></td>
-      <td>${c.link ? `<a href="${c.link}" target="_blank" style="color:var(--color-blue); text-decoration:none;">Acessar</a>` : '-'}</td>
+      <td>${linkHtml}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -127,9 +193,28 @@ function renderDetalheView(title, filterFn) {
   document.getElementById('detalhe-med-pend').textContent = mPendente;
 }
 
+// Submenu Toggle Logic
+const navTccToggle = document.getElementById('nav-tcc-toggle');
+const submenuTcc = document.getElementById('submenu-tcc');
+const chevron = navTccToggle.querySelector('.chevron');
+
+navTccToggle.addEventListener('click', () => {
+  if (submenuTcc.style.display === 'none') {
+    submenuTcc.style.display = 'flex';
+    chevron.style.transform = 'rotate(180deg)';
+  } else {
+    submenuTcc.style.display = 'none';
+    chevron.style.transform = 'rotate(0deg)';
+  }
+});
+
 // Lidar com clique na Sidebar Principal
 mainNavItems.forEach(navBtn => {
   navBtn.addEventListener('click', () => {
+    // Remove active do submenu-tcc master se clicar em outra coisa fora dele
+    if(!navBtn.classList.contains('sub-nav-item')) {
+       document.querySelectorAll('.sub-nav-item').forEach(b => b.classList.remove('active'));
+    }
     // UI state update
     mainNavItems.forEach(b => b.classList.remove('active'));
     navBtn.classList.add('active');
@@ -140,7 +225,7 @@ mainNavItems.forEach(navBtn => {
     
     if (viewId === 'visao-geral') {
       document.getElementById('view-visao-geral').classList.add('active');
-      topbarTitle.textContent = 'Visão Geral Institucional';
+      topbarTitle.textContent = 'Visão Geral';
     } else {
       document.getElementById('view-detalhe').classList.add('active');
       
@@ -150,21 +235,29 @@ mainNavItems.forEach(navBtn => {
         renderDetalheView(`Centro: ${centroId}`, (c) => c.centro === centroId);
       } 
       else if (viewId === 'prog-TCC') {
-        renderDetalheView('Programa: Trabalho de Conclusão (TCC)', (c) => 
-          c.disciplina.toUpperCase().includes('TCC') || 
-          c.disciplina.toUpperCase().includes('TRABALHO DE CONCLUS') || 
-          c.disciplina.toUpperCase().includes('MONOGRAFIA')
+        renderDetalheView('Trabalho de Conclusão de Curso', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'IDs'
+        );
+      }
+      else if (viewId === 'prog-TCC2') {
+        renderDetalheView('TCC 2ª Graduação', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'TCCs 2° graduação'
+        );
+      }
+      else if (viewId === 'prog-PESQ') {
+        renderDetalheView('Disciplinas de Pesquisa', (c) => 
+          c.grad === 'TCC' && c.tccCategory === 'Disciplinas de Pesquisas'
         );
       }
       else if (viewId === 'prog-ESTAGIO') {
-        renderDetalheView('Programa: Estágios Supervisionados', (c) => 
+        renderDetalheView('Estágios Supervisionados', (c) => 
           c.disciplina.toUpperCase().includes('ESTÁGIO') || 
           c.disciplina.toUpperCase().includes('ESTAGIO') || 
           c.statusMediacao === 'ESTAGIO'
         );
       }
       else if (viewId === 'prog-EXTENSAO') {
-        renderDetalheView('Programa: Atividades de Extensão', (c) => 
+        renderDetalheView('Atividades de Extensão', (c) => 
           c.disciplina.toUpperCase().includes('EXTENSÃO') || 
           c.disciplina.toUpperCase().includes('EXTENSO') || 
           c.disciplina.toUpperCase().includes('EXTENSIONISTA') || 
@@ -175,9 +268,6 @@ mainNavItems.forEach(navBtn => {
     }
   });
 });
-
-// Inicia com os gráficos originais
-renderCharts();
 
 // Animação progress bars da Visão Geral
 setTimeout(() => {
@@ -194,7 +284,6 @@ const iconSun = `<svg width="20" height="20" fill="none" stroke="currentColor" s
 themeBtn.addEventListener('click', () => {
   const currentTheme = document.documentElement.getAttribute('data-theme');
   
-  // Efeito de fade out nos canvas para não dar tranco na troca de cor
   document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0');
   
   setTimeout(() => {
@@ -206,17 +295,14 @@ themeBtn.addEventListener('click', () => {
       themeBtn.innerHTML = iconSun;
     }
     
-    // Re-render charts so they pick up new CSS variables
     for (let id in Chart.instances) {
       Chart.instances[id].destroy();
     }
-    renderCharts();
+    renderCharts(CENTERS, ENSALAMENTO, COURSES);
     
-    // Volta a opacidade
     document.querySelectorAll('canvas').forEach(c => {
       c.style.transition = 'opacity 0.4s ease';
       c.style.opacity = '1';
     });
-  }, 150); // delay leve para dar tempo da transição do CSS começar
+  }, 150);
 });
-

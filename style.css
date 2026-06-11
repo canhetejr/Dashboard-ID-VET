@@ -686,3 +686,6 @@ body, .sidebar, .card, .kpi-card, .topbar, .view-container, .table-container, th
     gap: 4px;
   }
 }
+
+.period-select { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-family: inherit; font-size: 0.9em; outline: none; margin-left: 8px; cursor: pointer; }
+.period-select:focus { border-color: var(--color-blue); }

@@ -1,5 +1,3 @@
-import { CENTERS, ENSALAMENTO, COURSES } from './data.js';
-
 // Utilitário para pegar a cor real da variável CSS
 function getCssColor(varName) {
   return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#ffffff';
@@ -20,7 +18,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-export function renderCharts() {
+function renderCharts(CENTERS, ENSALAMENTO, COURSES) {
   const colors = {
     green: getCssColor('--color-green'),
     amber: getCssColor('--color-amber'),

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Qualidade EAD - Dashboard SPA</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -14,8 +14,8 @@
     <div class="sidebar-brand">
       <img src="logo.png" alt="Logo UniCV" class="brand-logo">
       <div>
-        <div class="brand-title">Qualidade EAD</div>
-        <div class="brand-subtitle">UniCV</div>
+        <div class="brand-title">ID VET</div>
+        <div class="brand-subtitle">Unicive</div>
       </div>
     </div>
     
@@ -36,7 +36,15 @@
       <div class="nav-item" data-view="centro-CTIC">CTIC</div>
 
       <div class="nav-section">Programas</div>
-      <div class="nav-item" data-view="prog-TCC">TCC</div>
+      <div class="nav-item has-submenu" id="nav-tcc-toggle">
+        <span>TCC & Pesquisa</span>
+        <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+      </div>
+      <div class="submenu" id="submenu-tcc" style="display: none;">
+        <div class="nav-item sub-nav-item" data-view="prog-TCC">Padrão</div>
+        <div class="nav-item sub-nav-item" data-view="prog-TCC2">2ª Graduação</div>
+        <div class="nav-item sub-nav-item" data-view="prog-PESQ">Pesquisa</div>
+      </div>
       <div class="nav-item" data-view="prog-ESTAGIO">Estágio</div>
       <div class="nav-item" data-view="prog-EXTENSAO">Extensão</div>
     </nav>
@@ -47,11 +55,11 @@
     <!-- Topbar Header -->
     <header class="topbar">
       <div class="page-title">
-        <h1 id="topbar-title">Visão Geral Institucional</h1>
-        <p>Acompanhamento de disciplinas — Período <span id="lbl-periodo">2025.1</span></p>
+        <h1 id="topbar-title">Visão Geral</h1>
+        <p>Acompanhamento Acadêmico — Período <select id="tab-selector" class="period-select"></select></p>
       </div>
       <div style="display: flex; gap: 16px; align-items: center;">
-        <div class="topbar-meta" id="lbl-meta">Carregando...</div>
+        <div class="topbar-meta" id="lbl-meta" style="display:none;"></div>
         <button id="theme-toggle" class="btn-theme" title="Alternar Tema">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
         </button>
@@ -68,7 +76,7 @@
         <!-- KPI Grid -->
         <div class="kpi-grid">
           <div class="kpi-card" style="--kpi-color: var(--color-blue);">
-            <div class="kpi-label">Total de IDs</div>
+            <div class="kpi-label">Total de Disciplinas</div>
             <div class="kpi-value" id="kpi-total-ids">0</div>
             <div class="kpi-subtext">7 centros acadêmicos</div>
           </div>
@@ -83,7 +91,7 @@
             <div class="kpi-subtext" id="kpi-med-sub">0 de 0</div>
           </div>
           <div class="kpi-card" style="--kpi-color: var(--color-red);">
-            <div class="kpi-label">Mediação Crítica</div>
+            <div class="kpi-label">Mediação</div>
             <div class="kpi-value" style="color: var(--color-red);" id="kpi-med-pend">0</div>
             <div class="kpi-subtext">requer ação prioritária</div>
           </div>
@@ -102,7 +110,7 @@
 
           <!-- Linha 2 -->
           <div class="card card-narrow">
-            <h2 class="card-title">Perfil: Veteranos vs Ingressantes</h2>
+            <h2 class="card-title">Veteranos x Ingressantes</h2>
             <div class="chart-wrapper" style="min-height: 250px;">
               <canvas id="chartPerfil"></canvas>
             </div>
@@ -118,14 +126,14 @@
 
           <!-- Linha 3 -->
           <div class="card card-wide">
-            <h2 class="card-title">Ensalamento por Centro</h2>
+            <h2 class="card-title">Oferta de Disciplinas por Centro</h2>
             <div class="legend-custom" id="legendEnsalamento"></div>
             <div class="chart-wrapper">
               <canvas id="chartEnsalamento"></canvas>
             </div>
           </div>
           <div class="card card-narrow">
-            <h2 class="card-title">Programas Especiais</h2>
+            <h2 class="card-title">Disciplinas Especiais</h2>
             <div class="special-cards" id="special-progs-list">
               <!-- Renderizado via JS -->
             </div>
@@ -142,7 +150,7 @@
         <!-- KPI Grid Dinâmico -->
         <div class="kpi-grid">
           <div class="kpi-card" style="--kpi-color: var(--color-blue);">
-            <div class="kpi-label">Total de Turmas</div>
+            <div class="kpi-label">Total de Disciplinas</div>
             <div class="kpi-value" id="detalhe-total">0</div>
             <div class="kpi-subtext" id="detalhe-subtitle">Filtro aplicado</div>
           </div>
@@ -157,24 +165,24 @@
             <div class="kpi-subtext" id="detalhe-med-sub">0 concluidos</div>
           </div>
           <div class="kpi-card" style="--kpi-color: var(--color-red);">
-            <div class="kpi-label">Mediação Crítica</div>
+            <div class="kpi-label">Mediação</div>
             <div class="kpi-value" style="color: var(--color-red);" id="detalhe-med-pend">0</div>
             <div class="kpi-subtext">pendentes totais</div>
           </div>
         </div>
 
         <div class="card" style="margin-top: 24px;">
-          <h2 class="card-title">Listagem de Disciplinas</h2>
+          <h2 class="card-title">Relação de Turmas e Disciplinas</h2>
           <div class="table-container">
             <table id="tableDetalhe">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Disciplina</th>
-                  <th>Turma</th>
-                  <th>Conteúdo</th>
-                  <th>Mediação</th>
-                  <th>Link Moodle</th>
+                  <th>ID Moodle</th>
+                  <th>Componente Curricular</th>
+                  <th>Centro</th>
+                  <th>Status Conteúdo</th>
+                  <th>Status Mediação</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -189,8 +197,8 @@
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script type="module" src="data.js"></script>
-  <script type="module" src="charts.js"></script>
-  <script type="module" src="app.js"></script>
+  <script src="data.js" defer></script>
+  <script src="charts.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
