@@ -134,9 +134,9 @@ async function fetchGoogleSheetsData() {
       
       let link = linkIdx !== -1 ? (row[linkIdx] || '') : '';
       if (!link) {
-         link = `https://moodle.unicv.edu.br/course/view.php?id=${id}`;
+         link = `https://graduacaoead.unicive.edu.br/course/view.php?id=${id}`;
       } else if (!link.startsWith('http')) {
-         link = `https://moodle.unicv.edu.br/course/view.php?id=${id}`;
+         link = `https://graduacaoead.unicive.edu.br/course/view.php?id=${id}`;
       }
 
       courses.push({

@@ -91,7 +91,7 @@ function initDashboard(periodName) {
   }
 
   // Recarregar a view detalhe se estiver ativa
-  const activeNavItem = document.querySelector('.nav-item.active, .sub-nav-item.active');
+  const activeNavItem = document.querySelector('.nav-item.active');
   if (activeNavItem && activeNavItem.dataset.view !== 'visao-geral') {
     activeNavItem.click(); // forçar re-render da tabela
   }
@@ -108,27 +108,42 @@ function initDashboard(periodName) {
   }
 }
 
-// Inicialização do seletor
+// Inicialização do seletor de período (controle segmentado)
 try {
   const tabSelector = document.getElementById('tab-selector');
   const tabNames = Object.keys(DATA_BY_TAB || {});
 
   if (tabNames.length > 0) {
-    tabNames.forEach(tab => {
-      const opt = document.createElement('option');
-      opt.value = tab;
-      opt.textContent = tab;
-      tabSelector.appendChild(opt);
+    // "26.1" -> "2026.1" para exibição (mantém o valor original como chave)
+    const formatPeriodo = (tab) => /^\d{2}\.\d+$/.test(tab) ? `20${tab}` : tab;
+
+    const buttons = tabNames.map(tab => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'period-pill';
+      btn.dataset.value = tab;
+      btn.setAttribute('role', 'tab');
+      btn.textContent = formatPeriodo(tab);
+      tabSelector.appendChild(btn);
+      return btn;
     });
-    
-    tabSelector.addEventListener('change', (e) => {
-      initDashboard(e.target.value);
+
+    const selectTab = (tab) => {
+      buttons.forEach(b => {
+        const active = b.dataset.value === tab;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      initDashboard(tab);
+    };
+
+    tabSelector.addEventListener('click', (e) => {
+      const btn = e.target.closest('.period-pill');
+      if (btn) selectTab(btn.dataset.value);
     });
 
     // Carrega a última aba por padrão (geralmente a mais recente)
-    const defaultTab = tabNames[tabNames.length - 1];
-    tabSelector.value = defaultTab;
-    initDashboard(defaultTab);
+    selectTab(tabNames[tabNames.length - 1]);
   } else {
     document.getElementById('kpi-total-ids').innerHTML = `<span style="font-size:12px;color:orange">DATA_BY_TAB vazio ou undefined</span>`;
   }
@@ -140,7 +155,7 @@ try {
 // ROTEAMENTO (SPA) E NAVEGAÇÃO
 // ==========================================
 
-const mainNavItems = document.querySelectorAll('#main-nav .nav-item:not(.has-submenu)');
+const mainNavItems = document.querySelectorAll('#main-nav .nav-item');
 const views = document.querySelectorAll('.view-container');
 const topbarTitle = document.getElementById('topbar-title');
 
@@ -169,12 +184,12 @@ function renderDetalheView(title, filterFn) {
     const linkHtml = c.link ? '<a href="' + c.link + '" target="_blank" style="color:var(--color-blue); text-decoration:none;">Acessar</a>' : '-';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${c.id}</td>
-      <td title="${c.nomeBreve}"><strong>${c.disciplina}</strong><br><small style="color:var(--color-muted)">${c.grad} - ${c.turma}</small></td>
-      <td>${c.centro}</td>
-      <td><span style="color: ${cColor}; font-weight:600;">${c.statusConteudo || '-'}</span></td>
-      <td><span style="color: ${mColor}; font-weight:600;">${c.statusMediacao || '-'}</span></td>
-      <td>${linkHtml}</td>
+      <td data-label="ID Moodle">${c.id}</td>
+      <td data-label="Componente" title="${c.nomeBreve}"><strong>${c.disciplina}</strong><br><small style="color:var(--color-muted)">${c.grad} - ${c.turma}</small></td>
+      <td data-label="Centro">${c.centro}</td>
+      <td data-label="Conteúdo"><span style="color: ${cColor}; font-weight:600;">${c.statusConteudo || '-'}</span></td>
+      <td data-label="Mediação"><span style="color: ${mColor}; font-weight:600;">${c.statusMediacao || '-'}</span></td>
+      <td data-label="Ações">${linkHtml}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -191,80 +206,94 @@ function renderDetalheView(title, filterFn) {
   document.getElementById('detalhe-med-sub').textContent = `${mOk} concluídos`;
   
   document.getElementById('detalhe-med-pend').textContent = mPendente;
+
+  // Agregação de Mediadores por Disciplina (mesmo filtro da relação)
+  renderMediadoresTable(filtered);
 }
 
-// Submenu Toggle Logic
-const navTccToggle = document.getElementById('nav-tcc-toggle');
-const submenuTcc = document.getElementById('submenu-tcc');
-const chevron = navTccToggle.querySelector('.chevron');
+// Agrega as disciplinas filtradas por mediador, com a quebra de status de mediação
+function renderMediadoresTable(list) {
+  const tbody = document.querySelector('#tableMediadores tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
 
-navTccToggle.addEventListener('click', () => {
-  if (submenuTcc.style.display === 'none') {
-    submenuTcc.style.display = 'flex';
-    chevron.style.transform = 'rotate(180deg)';
-  } else {
-    submenuTcc.style.display = 'none';
-    chevron.style.transform = 'rotate(0deg)';
+  const map = {};
+  list.forEach(c => {
+    const nome = (c.mediador || '').replace(/\s*\|\s*Unicive\s*$/i, '').trim() || '— Sem mediador';
+    if (!map[nome]) map[nome] = { total: 0, concluido: 0, andamento: 0, aguardando: 0, verificar: 0, pendente: 0 };
+    const m = map[nome];
+    m.total++;
+    switch (c.statusMediacao) {
+      case 'CONCLUIDO': m.concluido++; break;
+      case 'ANDAMENTO': m.andamento++; break;
+      case 'AGUARDANDO': m.aguardando++; break;
+      case 'VERIFICAR': m.verificar++; break;
+      case 'ESTAGIO': case 'NAO_OFERTADO': break; // estados neutros: não contam como pendência
+      default: m.pendente++; // PENDENTE e demais
+    }
+  });
+
+  const arr = Object.keys(map).map(nome => ({ nome, ...map[nome] }));
+  arr.sort((a, b) => b.total - a.total || a.nome.localeCompare(b.nome));
+
+  if (arr.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--color-muted)">Sem dados de mediadores.</td></tr>';
+    return;
   }
-});
+
+  const cell = (val, color) => val > 0
+    ? `<span style="color:${color};font-weight:600">${val}</span>`
+    : `<span style="color:var(--color-hint)">0</span>`;
+
+  arr.forEach(m => {
+    const perc = m.total > 0 ? Math.round((m.concluido / m.total) * 100) : 0;
+    const percColor = perc >= 80 ? 'var(--color-green)' : (perc >= 50 ? 'var(--color-amber)' : 'var(--color-red)');
+    const semMediador = m.nome.charAt(0) === '—';
+    const nomeHtml = semMediador
+      ? `<span style="color:var(--color-muted)">${m.nome}</span>`
+      : `<strong>${m.nome}</strong>`;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td data-label="Mediador">${nomeHtml}</td>
+      <td data-label="Disciplinas"><strong>${m.total}</strong></td>
+      <td data-label="Concluído">${cell(m.concluido, 'var(--color-green)')}</td>
+      <td data-label="Andamento">${cell(m.andamento, 'var(--color-blue)')}</td>
+      <td data-label="Aguardando">${cell(m.aguardando, 'var(--color-purple)')}</td>
+      <td data-label="Verificar">${cell(m.verificar, 'var(--color-amber)')}</td>
+      <td data-label="Pendente">${cell(m.pendente, 'var(--color-red)')}</td>
+      <td data-label="% Conclusão">
+        <div style="display:flex;align-items:center;gap:8px;min-width:90px">
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--color-border);overflow:hidden">
+            <div style="width:${perc}%;height:100%;background:${percColor}"></div>
+          </div>
+          <span style="color:${percColor};font-weight:600;font-size:12px">${perc}%</span>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
 // Lidar com clique na Sidebar Principal
 mainNavItems.forEach(navBtn => {
   navBtn.addEventListener('click', () => {
-    // Remove active do submenu-tcc master se clicar em outra coisa fora dele
-    if(!navBtn.classList.contains('sub-nav-item')) {
-       document.querySelectorAll('.sub-nav-item').forEach(b => b.classList.remove('active'));
-    }
     // UI state update
     mainNavItems.forEach(b => b.classList.remove('active'));
     navBtn.classList.add('active');
-    
+
     views.forEach(v => v.classList.remove('active'));
-    
+
     const viewId = navBtn.dataset.view;
-    
+
     if (viewId === 'visao-geral') {
       document.getElementById('view-visao-geral').classList.add('active');
-      topbarTitle.textContent = 'Visão Geral';
+      topbarTitle.textContent = 'ID VET';
     } else {
+      // Detalhe por centro (ex: centro-CCAS)
       document.getElementById('view-detalhe').classList.add('active');
-      
-      // Checar se é centro ou prog
-      if (viewId.startsWith('centro-')) {
-        const centroId = viewId.split('-')[1]; // ex: CCAS
-        renderDetalheView(`Centro: ${centroId}`, (c) => c.centro === centroId);
-      } 
-      else if (viewId === 'prog-TCC') {
-        renderDetalheView('Trabalho de Conclusão de Curso', (c) => 
-          c.grad === 'TCC' && c.tccCategory === 'IDs'
-        );
-      }
-      else if (viewId === 'prog-TCC2') {
-        renderDetalheView('TCC 2ª Graduação', (c) => 
-          c.grad === 'TCC' && c.tccCategory === 'TCCs 2° graduação'
-        );
-      }
-      else if (viewId === 'prog-PESQ') {
-        renderDetalheView('Disciplinas de Pesquisa', (c) => 
-          c.grad === 'TCC' && c.tccCategory === 'Disciplinas de Pesquisas'
-        );
-      }
-      else if (viewId === 'prog-ESTAGIO') {
-        renderDetalheView('Estágios Supervisionados', (c) => 
-          c.disciplina.toUpperCase().includes('ESTÁGIO') || 
-          c.disciplina.toUpperCase().includes('ESTAGIO') || 
-          c.statusMediacao === 'ESTAGIO'
-        );
-      }
-      else if (viewId === 'prog-EXTENSAO') {
-        renderDetalheView('Atividades de Extensão', (c) => 
-          c.disciplina.toUpperCase().includes('EXTENSÃO') || 
-          c.disciplina.toUpperCase().includes('EXTENSO') || 
-          c.disciplina.toUpperCase().includes('EXTENSIONISTA') || 
-          c.statusMediacao === 'EXTENSÃO' || 
-          c.statusMediacao === 'EXTENSO'
-        );
-      }
+      const centroId = viewId.split('-')[1];
+      renderDetalheView(`Centro: ${centroId}`, (c) => c.centro === centroId);
     }
   });
 });

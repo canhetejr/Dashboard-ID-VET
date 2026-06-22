@@ -21,32 +21,40 @@
     
     <nav class="sidebar-nav" id="main-nav">
       <div class="nav-section">Principal</div>
-      <div class="nav-item active" data-view="visao-geral">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
-        Visão Geral
+      <div class="nav-item active" data-view="visao-geral" style="--nav-accent: var(--color-blue);" title="Visão Geral">
+        <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
+        <span class="nav-label">Visão Geral</span>
       </div>
-      
-      <div class="nav-section">Centros</div>
-      <div class="nav-item" data-view="centro-CCAS">CCAS</div>
-      <div class="nav-item" data-view="centro-CCS">CCS</div>
-      <div class="nav-item" data-view="centro-CCSA">CCSA</div>
-      <div class="nav-item" data-view="centro-CEHLA">CEHLA</div>
-      <div class="nav-item" data-view="centro-CES">CES</div>
-      <div class="nav-item" data-view="centro-CGJS">CGJS</div>
-      <div class="nav-item" data-view="centro-CTIC">CTIC</div>
 
-      <div class="nav-section">Programas</div>
-      <div class="nav-item has-submenu" id="nav-tcc-toggle">
-        <span>TCC & Pesquisa</span>
-        <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+      <div class="nav-section">Centros</div>
+      <div class="nav-item" data-view="centro-CCAS" style="--nav-accent: var(--color-blue);" title="CCAS — Cidadania e Ação Social">
+        <span class="nav-badge">CCAS</span>
+        <span class="nav-label">Cidadania e Ação Social</span>
       </div>
-      <div class="submenu" id="submenu-tcc" style="display: none;">
-        <div class="nav-item sub-nav-item" data-view="prog-TCC">Padrão</div>
-        <div class="nav-item sub-nav-item" data-view="prog-TCC2">2ª Graduação</div>
-        <div class="nav-item sub-nav-item" data-view="prog-PESQ">Pesquisa</div>
+      <div class="nav-item" data-view="centro-CCS" style="--nav-accent: var(--color-blue);" title="CCS — Ciências da Saúde">
+        <span class="nav-badge">CCS</span>
+        <span class="nav-label">Ciências da Saúde</span>
       </div>
-      <div class="nav-item" data-view="prog-ESTAGIO">Estágio</div>
-      <div class="nav-item" data-view="prog-EXTENSAO">Extensão</div>
+      <div class="nav-item" data-view="centro-CCSA" style="--nav-accent: var(--color-blue);" title="CCSA — Ciências Sociais Aplicadas">
+        <span class="nav-badge">CCSA</span>
+        <span class="nav-label">Ciências Sociais Aplicadas</span>
+      </div>
+      <div class="nav-item" data-view="centro-CEHLA" style="--nav-accent: var(--color-blue);" title="CEHLA — Engenharias, Humanidades e Letras">
+        <span class="nav-badge">CEHLA</span>
+        <span class="nav-label">Engenharias, Humanidades e Letras</span>
+      </div>
+      <div class="nav-item" data-view="centro-CES" style="--nav-accent: var(--color-blue);" title="CES — Centro de Excelência em Saúde">
+        <span class="nav-badge">CES</span>
+        <span class="nav-label">Excelência em Saúde</span>
+      </div>
+      <div class="nav-item" data-view="centro-CGJS" style="--nav-accent: var(--color-blue);" title="CGJS — Gestão e Jurídico">
+        <span class="nav-badge">CGJS</span>
+        <span class="nav-label">Gestão e Jurídico</span>
+      </div>
+      <div class="nav-item" data-view="centro-CTIC" style="--nav-accent: var(--color-blue);" title="CTIC — Tecnologia da Informação">
+        <span class="nav-badge">CTIC</span>
+        <span class="nav-label">Tecnologia da Informação</span>
+      </div>
     </nav>
   </aside>
 
@@ -55,10 +63,14 @@
     <!-- Topbar Header -->
     <header class="topbar">
       <div class="page-title">
-        <h1 id="topbar-title">Visão Geral</h1>
-        <p>Acompanhamento Acadêmico — Período <select id="tab-selector" class="period-select"></select></p>
+        <h1 id="topbar-title">ID VET</h1>
+        <p>Acompanhamento Acadêmico</p>
       </div>
-      <div style="display: flex; gap: 16px; align-items: center;">
+      <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+        <div class="period-control">
+          <span class="period-control-label">Período</span>
+          <div class="period-switch" id="tab-selector" role="tablist" aria-label="Selecionar período"></div>
+        </div>
         <div class="topbar-meta" id="lbl-meta" style="display:none;"></div>
         <button id="theme-toggle" class="btn-theme" title="Alternar Tema">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -100,15 +112,6 @@
         <div class="dashboard-grid">
           
           <!-- Linha 1 -->
-          <div class="card card-wide" style="grid-column: 1 / -1;">
-            <h2 class="card-title">Status de Mediação por Centro</h2>
-            <div class="legend-custom" id="legendMediacao"></div>
-            <div class="chart-wrapper">
-              <canvas id="chartMediacao"></canvas>
-            </div>
-          </div>
-
-          <!-- Linha 2 -->
           <div class="card card-narrow">
             <h2 class="card-title">Veteranos x Ingressantes</h2>
             <div class="chart-wrapper" style="min-height: 250px;">
@@ -124,7 +127,7 @@
             </div>
           </div>
 
-          <!-- Linha 3 -->
+          <!-- Linha 2 -->
           <div class="card card-wide">
             <h2 class="card-title">Oferta de Disciplinas por Centro</h2>
             <div class="legend-custom" id="legendEnsalamento"></div>
@@ -139,12 +142,21 @@
             </div>
           </div>
 
+          <!-- Linha 3: Status de Mediação por Centro (movido para o final) -->
+          <div class="card card-wide" style="grid-column: 1 / -1;">
+            <h2 class="card-title">Status de Mediação por Centro</h2>
+            <div class="legend-custom" id="legendMediacao"></div>
+            <div class="chart-wrapper">
+              <canvas id="chartMediacao"></canvas>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
       <!-- ============================================== -->
-      <!-- VIEW: DETALHE (Centros ou Programas)           -->
+      <!-- VIEW: DETALHE (Centros)                        -->
       <!-- ============================================== -->
       <div id="view-detalhe" class="view-container">
         <!-- KPI Grid Dinâmico -->
@@ -168,6 +180,29 @@
             <div class="kpi-label">Mediação</div>
             <div class="kpi-value" style="color: var(--color-red);" id="detalhe-med-pend">0</div>
             <div class="kpi-subtext">pendentes totais</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+          <h2 class="card-title">Mediadores por Disciplina</h2>
+          <div class="table-container">
+            <table id="tableMediadores">
+              <thead>
+                <tr>
+                  <th>Mediador</th>
+                  <th>Disciplinas</th>
+                  <th>Concluído</th>
+                  <th>Andamento</th>
+                  <th>Aguardando</th>
+                  <th>Verificar</th>
+                  <th>Pendente</th>
+                  <th>% Conclusão</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
           </div>
         </div>
 
