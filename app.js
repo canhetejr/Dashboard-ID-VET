@@ -90,9 +90,12 @@ function initDashboard(periodName) {
     `;
   }
 
-  // Recarregar a view detalhe se estiver ativa
+  // Recarregar a view detalhe ou a busca global se estiver ativa
+  const searchEl = document.getElementById('global-search-input');
   const activeNavItem = document.querySelector('.nav-item.active');
-  if (activeNavItem && activeNavItem.dataset.view !== 'visao-geral') {
+  if (searchEl && searchEl.value.trim() !== '') {
+    runGlobalSearch(searchEl.value); // re-aplica a busca no novo período
+  } else if (activeNavItem && activeNavItem.dataset.view !== 'visao-geral') {
     activeNavItem.click(); // forçar re-render da tabela
   }
 
@@ -193,6 +196,10 @@ function renderDetalheView(title, filterFn) {
     `;
     tbody.appendChild(tr);
   });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--color-muted);padding:24px">Nenhum resultado encontrado.</td></tr>';
+  }
 
   // Atualizar KPIs detalhe
   document.getElementById('detalhe-total').textContent = total;
@@ -297,6 +304,46 @@ mainNavItems.forEach(navBtn => {
     }
   });
 });
+
+// ==========================================
+// BUSCA GLOBAL
+// ==========================================
+function normalizeText(s) {
+  return (s == null ? '' : String(s)).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+function runGlobalSearch(rawQuery) {
+  const q = normalizeText(rawQuery).trim();
+  document.querySelectorAll('#main-nav .nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-detalhe').classList.add('active');
+
+  const filterFn = (c) => normalizeText([
+    c.id, c.disciplina, c.nomeBreve, c.mediador, c.centro,
+    c.grad, c.turma, c.statusMediacao, c.statusConteudo
+  ].join(' ')).includes(q);
+
+  renderDetalheView(`Busca: "${rawQuery.trim()}"`, filterFn);
+}
+
+const globalSearchInput = document.getElementById('global-search-input');
+if (globalSearchInput) {
+  const voltarVisaoGeral = () => {
+    const vg = document.querySelector('#main-nav .nav-item[data-view="visao-geral"]');
+    if (vg) vg.click();
+  };
+  globalSearchInput.addEventListener('input', () => {
+    if (globalSearchInput.value.trim() === '') voltarVisaoGeral();
+    else runGlobalSearch(globalSearchInput.value);
+  });
+  globalSearchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      globalSearchInput.value = '';
+      voltarVisaoGeral();
+      globalSearchInput.blur();
+    }
+  });
+}
 
 // Animação progress bars da Visão Geral
 setTimeout(() => {
