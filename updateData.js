@@ -4,13 +4,13 @@ const { google } = require('googleapis');
 const credentials = require('./credentials.json');
 
 const centersMapTemplate = {
-  'CCAS': { label: 'Cidadania e Ação Social', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CCS': { label: 'Ciências da Saúde', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CCSA': { label: 'Ciências Sociais Aplicadas', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CEHLA': { label: 'Engenharias, Humanidades e Letras', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CES': { label: 'Centro de Excelência em Saúde', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CGJS': { label: 'Gestão e Jurídico', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
-  'CTIC': { label: 'Tecnologia da Informação', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } }
+  'CCAS': { label: 'Centro de Cidadania e Ação Social', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CCS': { label: 'Centro de Ciências da Saúde', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CCSA': { label: 'Centro de Ciências Sociais Aplicadas', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CEHLA': { label: 'Centro de Educação, Humanidades, Letras e Artes', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CES': { label: 'Centro de Engenharia e Sustentabilidade', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CGJS': { label: 'Centro de Gestão Jurídica e Segurança', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } },
+  'CTIC': { label: 'Centro de Tecnologia da Informação e Comunicação', total: 0, conteudo: { ok: 0, pendente: 0 }, mediacao: { ok: 0, pendente: 0, verificar: 0, andamento: 0, aguardando: 0, estagio: 0, naoOfertado: 0 } }
 };
 
 const ensalamentoMapTemplate = {

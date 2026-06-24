@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qualidade EAD - Dashboard SPA</title>
+  <title>Qualidade EAD - Dashboard ID VET</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css?v=2">
 </head>
@@ -27,33 +27,33 @@
       </div>
 
       <div class="nav-section">Centros</div>
-      <div class="nav-item" data-view="centro-CCAS" style="--nav-accent: var(--color-blue);" title="CCAS — Cidadania e Ação Social">
+      <div class="nav-item" data-view="centro-CCAS" style="--nav-accent: var(--color-blue);" title="CCAS — Centro de Cidadania e Ação Social">
         <span class="nav-badge">CCAS</span>
-        <span class="nav-label">Cidadania e Ação Social</span>
+        <span class="nav-label">Centro de Cidadania e Ação Social</span>
       </div>
-      <div class="nav-item" data-view="centro-CCS" style="--nav-accent: var(--color-blue);" title="CCS — Ciências da Saúde">
+      <div class="nav-item" data-view="centro-CCS" style="--nav-accent: var(--color-blue);" title="CCS — Centro de Ciências da Saúde">
         <span class="nav-badge">CCS</span>
-        <span class="nav-label">Ciências da Saúde</span>
+        <span class="nav-label">Centro de Ciências da Saúde</span>
       </div>
-      <div class="nav-item" data-view="centro-CCSA" style="--nav-accent: var(--color-blue);" title="CCSA — Ciências Sociais Aplicadas">
+      <div class="nav-item" data-view="centro-CCSA" style="--nav-accent: var(--color-blue);" title="CCSA — Centro de Ciências Sociais Aplicadas">
         <span class="nav-badge">CCSA</span>
-        <span class="nav-label">Ciências Sociais Aplicadas</span>
+        <span class="nav-label">Centro de Ciências Sociais Aplicadas</span>
       </div>
-      <div class="nav-item" data-view="centro-CEHLA" style="--nav-accent: var(--color-blue);" title="CEHLA — Engenharias, Humanidades e Letras">
+      <div class="nav-item" data-view="centro-CEHLA" style="--nav-accent: var(--color-blue);" title="CEHLA — Centro de Educação, Humanidades, Letras e Artes">
         <span class="nav-badge">CEHLA</span>
-        <span class="nav-label">Engenharias, Humanidades e Letras</span>
+        <span class="nav-label">Centro de Educação, Humanidades, Letras e Artes</span>
       </div>
-      <div class="nav-item" data-view="centro-CES" style="--nav-accent: var(--color-blue);" title="CES — Centro de Excelência em Saúde">
+      <div class="nav-item" data-view="centro-CES" style="--nav-accent: var(--color-blue);" title="CES — Centro de Engenharia e Sustentabilidade">
         <span class="nav-badge">CES</span>
-        <span class="nav-label">Excelência em Saúde</span>
+        <span class="nav-label">Centro de Engenharia e Sustentabilidade</span>
       </div>
-      <div class="nav-item" data-view="centro-CGJS" style="--nav-accent: var(--color-blue);" title="CGJS — Gestão e Jurídico">
+      <div class="nav-item" data-view="centro-CGJS" style="--nav-accent: var(--color-blue);" title="CGJS — Centro de Gestão Jurídica e Segurança">
         <span class="nav-badge">CGJS</span>
-        <span class="nav-label">Gestão e Jurídico</span>
+        <span class="nav-label">Centro de Gestão Jurídica e Segurança</span>
       </div>
-      <div class="nav-item" data-view="centro-CTIC" style="--nav-accent: var(--color-blue);" title="CTIC — Tecnologia da Informação">
+      <div class="nav-item" data-view="centro-CTIC" style="--nav-accent: var(--color-blue);" title="CTIC — Centro de Tecnologia da Informação e Comunicação">
         <span class="nav-badge">CTIC</span>
-        <span class="nav-label">Tecnologia da Informação</span>
+        <span class="nav-label">Centro de Tecnologia da Informação e Comunicação</span>
       </div>
     </nav>
   </aside>
@@ -67,6 +67,10 @@
         <p>Acompanhamento Acadêmico</p>
       </div>
       <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+        <div class="global-search">
+          <svg class="global-search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path stroke-linecap="round" d="M21 21l-4.35-4.35"></path></svg>
+          <input type="search" id="global-search-input" placeholder="Buscar disciplina, mediador, centro, ID..." autocomplete="off" aria-label="Busca global">
+        </div>
         <div class="period-control">
           <span class="period-control-label">Período</span>
           <div class="period-switch" id="tab-selector" role="tablist" aria-label="Selecionar período"></div>
