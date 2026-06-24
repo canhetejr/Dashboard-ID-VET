@@ -3,7 +3,7 @@ const DATA_BY_TAB = {
     "CENTERS": [
       {
         "key": "CCAS",
-        "label": "Cidadania e Ação Social",
+        "label": "Centro de Cidadania e Ação Social",
         "total": 113,
         "conteudo": {
           "ok": 113,
@@ -21,7 +21,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CCS",
-        "label": "Ciências da Saúde",
+        "label": "Centro de Ciências da Saúde",
         "total": 282,
         "conteudo": {
           "ok": 282,
@@ -39,7 +39,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CCSA",
-        "label": "Ciências Sociais Aplicadas",
+        "label": "Centro de Ciências Sociais Aplicadas",
         "total": 223,
         "conteudo": {
           "ok": 223,
@@ -57,7 +57,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CEHLA",
-        "label": "Engenharias, Humanidades e Letras",
+        "label": "Centro de Educação, Humanidades, Letras e Artes",
         "total": 519,
         "conteudo": {
           "ok": 516,
@@ -75,7 +75,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CES",
-        "label": "Centro de Excelência em Saúde",
+        "label": "Centro de Engenharia e Sustentabilidade",
         "total": 169,
         "conteudo": {
           "ok": 169,
@@ -93,7 +93,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CGJS",
-        "label": "Gestão e Jurídico",
+        "label": "Centro de Gestão Jurídica e Segurança",
         "total": 160,
         "conteudo": {
           "ok": 160,
@@ -111,7 +111,7 @@ const DATA_BY_TAB = {
       },
       {
         "key": "CTIC",
-        "label": "Tecnologia da Informação",
+        "label": "Centro de Tecnologia da Informação e Comunicação",
         "total": 296,
         "conteudo": {
           "ok": 295,
@@ -131,49 +131,49 @@ const DATA_BY_TAB = {
     "ENSALAMENTO": [
       {
         "key": "CCAS",
-        "label": "Cidadania e Ação Social",
+        "label": "Centro de Cidadania e Ação Social",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CCS",
-        "label": "Ciências da Saúde",
+        "label": "Centro de Ciências da Saúde",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CCSA",
-        "label": "Ciências Sociais Aplicadas",
+        "label": "Centro de Ciências Sociais Aplicadas",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CEHLA",
-        "label": "Engenharias, Humanidades e Letras",
+        "label": "Centro de Educação, Humanidades, Letras e Artes",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CES",
-        "label": "Centro de Excelência em Saúde",
+        "label": "Centro de Engenharia e Sustentabilidade",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CGJS",
-        "label": "Gestão e Jurídico",
+        "label": "Centro de Gestão Jurídica e Segurança",
         "ead": 0,
         "semi": 0,
         "tecs": 0
       },
       {
         "key": "CTIC",
-        "label": "Tecnologia da Informação",
+        "label": "Centro de Tecnologia da Informação e Comunicação",
         "ead": 0,
         "semi": 0,
         "tecs": 0

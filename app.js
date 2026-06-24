@@ -61,7 +61,7 @@ function initDashboard(periodName) {
     const dUpper = c.disciplina.toUpperCase();
     const mStatus = c.statusMediacao;
     
-    if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('MONOGRAFIA')) {
+    if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('')) {
       tccCount++;
     }
     else if (dUpper.includes('ESTÁGIO') || dUpper.includes('ESTAGIO') || mStatus === 'ESTAGIO') {
@@ -76,11 +76,11 @@ function initDashboard(periodName) {
   if(progsContainer) {
     progsContainer.innerHTML = `
       <div class="special-card">
-        <span class="special-card-title">TCC / Monografias</span>
+        <span class="special-card-title">TCC</span>
         <span class="special-card-value">${tccCount}</span>
       </div>
       <div class="special-card">
-        <span class="special-card-title">Estágios Sup.</span>
+        <span class="special-card-title">Estágios</span>
         <span class="special-card-value">${estagioCount}</span>
       </div>
       <div class="special-card">
