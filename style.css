@@ -80,23 +80,35 @@ body {
 
 /* Sidebar */
 .sidebar {
-  width: 280px;
+  width: 88px;
   margin: 16px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   padding: 24px 0;
   z-index: 10;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  overflow-x: hidden;
+}
+
+.sidebar:hover {
+  width: 280px;
+  box-shadow: var(--shadow-hover);
 }
 
 .sidebar-brand {
-  padding: 0 24px 20px 24px;
+  padding: 0 12px 20px 12px;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar:hover .sidebar-brand {
+  padding: 0 24px 20px 24px;
 }
 
 .brand-logo {
@@ -142,6 +154,11 @@ body {
   margin-top: 16px;
   margin-bottom: 4px;
   padding-left: 16px;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.sidebar:not(:hover) .nav-section {
+  opacity: 0;
 }
 .sidebar-nav > .nav-section:first-child {
   margin-top: 0;
@@ -748,8 +765,9 @@ body, .sidebar, .card, .kpi-card, .topbar, .view-container, .table-container, th
 .period-pill:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 /* Menu lateral - itens com badge de sigla + nome do centro */
-.nav-icon { flex-shrink: 0; }
-.nav-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.nav-icon { flex-shrink: 0; margin-left: 12px; margin-right: 12px; display: flex; justify-content: center; align-items: center; }
+.nav-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; transition: opacity 0.2s ease; }
+.sidebar:not(:hover) .nav-label { opacity: 0; pointer-events: none; }
 .nav-badge { flex-shrink: 0; min-width: 44px; height: 24px; padding: 0 9px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border-radius: var(--radius-full); color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 14%, transparent); transition: color 0.2s ease, background 0.2s ease; }
 .nav-item:hover .nav-badge { background: color-mix(in srgb, var(--color-accent) 24%, transparent); }
 .nav-item.active .nav-badge { color: var(--color-accent-ink); background: rgba(0, 0, 0, 0.12); }
