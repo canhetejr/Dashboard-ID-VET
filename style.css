@@ -192,9 +192,11 @@ body {
 /* Main Content */
 .main-wrapper {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -386,6 +388,7 @@ body {
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .card-title {
