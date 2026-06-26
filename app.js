@@ -61,7 +61,7 @@ function initDashboard(periodName) {
     const dUpper = c.disciplina.toUpperCase();
     const mStatus = c.statusMediacao;
     
-    if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS') || dUpper.includes('')) {
+    if (dUpper.includes('TCC') || dUpper.includes('TRABALHO DE CONCLUS')) {
       tccCount++;
     }
     else if (dUpper.includes('ESTÁGIO') || dUpper.includes('ESTAGIO') || mStatus === 'ESTAGIO') {
